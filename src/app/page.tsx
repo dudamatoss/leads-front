@@ -35,7 +35,14 @@ export default function Home() {
                   <div className="p-6">
                       <LeadsHeader />
                   </div>
-                  <div className="p-6">
+                  <div className="flex flex-col gap-y-3 p-6 pt-1">
+                      <LeadRow />
+                      <LeadRow />
+                      <LeadRow />
+                      <LeadRow />
+                      <LeadRow />
+                      <LeadRow />
+                      <LeadRow />
                       <LeadRow />
                   </div>
 
