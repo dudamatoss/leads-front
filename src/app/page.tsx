@@ -4,10 +4,11 @@ import {Search} from "lucide-react";
 import {SearchFilter} from "@/components/Filters/SeaechFilter";
 import {OriginFilter, TipesFilter} from "@/components/Filters/DropDownFilter";
 import {LeadsHeader} from "@/components/Information/LeadsHeader";
+import {LeadRow} from "@/components/Information/LeadRow";
 
 export default function Home() {
   return (
-      <main className="p-12">
+      <main className="p-10">
           <div className="flex flex-col ">
               <h1 className= "mb-2 text-4xl font-bold">Leads</h1>
               <h3 className="text-gray-500 text-lg mb-3">Gerencie e vizualize todas as leads</h3>
@@ -33,6 +34,9 @@ export default function Home() {
                   </div>
                   <div className="p-6">
                       <LeadsHeader />
+                  </div>
+                  <div className="p-6">
+                      <LeadRow />
                   </div>
 
               </div>

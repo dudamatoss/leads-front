@@ -6,7 +6,7 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger
 
 export function LeadsHeader() {
     return (
-        <div className="w-full bg-muted rounded-md px-4 py-3 flex items-center justify-between text-sm font-medium text-muted-foreground">
+        <div className="w-full bg-muted rounded-md px-15 py-3 flex items-center justify-between text-sm font-medium text-muted-foreground">
         {/*Contato*/}
             <div className=" ml-3 flex items-center text-orange-500">
                 <User2 className="h-4 w-4" />
