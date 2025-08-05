@@ -10,14 +10,13 @@ export function OriginFilter() {
                 <SelectValue placeholder= "Selecione.."></SelectValue>
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="all">Tdoas as Origens</SelectItem>
+                <SelectItem value="all">Todas as Origens</SelectItem>
                 <SelectItem value="instagram">Instagram</SelectItem>
                 <SelectItem value="facebook">Facebook</SelectItem>
                 <SelectItem value="google">Google</SelectItem>
             </SelectContent>
         </Select>
     )
-
 }
 
 export function TipesFilter() {
