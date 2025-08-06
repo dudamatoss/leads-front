@@ -1,6 +1,6 @@
 "use client";
 
-import {Copy, CheckCircle} from "lucide-react";
+import {CheckCircle} from "lucide-react";
 import {LeadType} from "@/schemas/leads-schemas";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
@@ -12,6 +12,9 @@ import {
     SelectItem,
     SelectContent,
 } from "@/components/ui/select";
+import {putLead} from "@/lib/services/put-leads";
+import {formatInteresse, normalizeInteresse} from "@/utils/InteresseFormat";
+import {TypeDropdown} from "@/components/Information/ItemsRow/TypeDropDown";
 
 
 type Props = {
@@ -46,15 +49,7 @@ export function LeadRow({lead}: Props) {
             {/* Anúncio */}
             <span className="text-orange-400 font-normal">{lead.anuncio}</span>
             {/* Tipo (interesse) */}
-            <Select defaultValue={lead.interesse.toLowerCase()}>
-                <SelectTrigger className="text-xs bg-blue-100 text-blue-800 w-fit px-3 h-6 rounded-full border-none">
-                    <SelectValue/>
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="revenda">Revenda</SelectItem>
-                    <SelectItem value="utilizacao">Utilização</SelectItem>
-                </SelectContent>
-            </Select>
+            <TypeDropdown value={lead.interesse} />
             {/* Data */}
             <span className="text-gray-600 font-medium whitespace-nowrap">
         {new Date(lead.data_hora).toLocaleString("pt-BR")}

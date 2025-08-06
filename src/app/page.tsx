@@ -9,6 +9,7 @@ import {OriginFilter, TypesFilter} from "@/components/Filters/DropDownFilter";
 import { LeadsHeader } from "@/components/Information/LeadsHeader";
 import {getLeads} from "@/lib/services/get-leads";
 import {LeadType} from "@/schemas/leads-schemas";
+import {formatInteresse} from "@/utils/InteresseFormat";
 
 export default function Home() {
     const [leads, setLeads] = useState<LeadType[]>([]);
@@ -38,7 +39,6 @@ export default function Home() {
                 <h1 className="mb-2 text-4xl font-bold">Leads</h1>
                 <h3 className="text-gray-500 text-lg mb-3">Gerencie e vizualize todas as leads</h3>
             </div>
-
             <div className="flex flex-wrap justify-between">
                 <LeadCard />
                 <LeadCard />
@@ -49,25 +49,21 @@ export default function Home() {
                     <div className="p-6">
                         <StatusFilter value={statusFilter} onChange={setStatusFilter} />
                     </div>
-
                     {/* Filtros */}
                     <div className="flex flex-wrap gap-4 p-6">
                         <SearchFilter placeholder="Buscar por nome..." />
                         <OriginFilter value={originFilter} onChange={setOriginFilter} />
                         <TypesFilter value={typeFilter} onChange ={setTypeFilter} />
                     </div>
-
                     {/* Título e subtítulo */}
                     <div className="pl-6 pt-6 pb-6">
                         <h2 className="pb-1 text-2xl font-bold">{leads.length} Leads</h2>
                         <h3 className="text-gray-500 text-l">Todas as leads registradas</h3>
                     </div>
-
                     {/* Cabeçalho da tabela */}
                     <div className="p-6">
                         <LeadsHeader />
                     </div>
-
                     {/* Lista de leads */}
                     <div className="flex flex-col gap-y-3 p-6 pt-1">
                         {loading ? (
