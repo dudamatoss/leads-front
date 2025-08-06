@@ -24,7 +24,7 @@ export function LeadRow({lead}: Props) {
         <div
             className="grid grid-cols-[1.5fr_1.1fr_1.3fr_1.2fr_1.2fr_1fr_1fr] items-center gap-4 px-8 py-3 border rounded-md bg-white text-sm">
             {/* Contato */}
-            <div className="flex items-start gap-3">
+            <div className="flex items-center gap-3">
                 <div
                     className="w-9 h-9 bg-orange-500/80 text-white font-semibold flex items-center justify-center rounded-full text-xs uppercase">
                     {(lead.nome ?? "?").slice(0, 2)}
@@ -42,7 +42,7 @@ export function LeadRow({lead}: Props) {
                 </div>
             </div>
             {/* Origem */}
-            <span className="text-gray-600 font-medium">{lead.fonte}</span>
+            <span className="text-gray-600 font-medium p-5">{lead.fonte}</span>
             {/* Anúncio */}
             <span className="text-orange-400 font-normal">{lead.anuncio}</span>
             {/* Tipo (interesse) */}

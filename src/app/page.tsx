@@ -15,13 +15,20 @@ import {LeadType} from "@/schemas/leads-schemas";
 export default function Home() {
     const [leads, setLeads] = useState<LeadType[]>([]);
     const [loading, setLoading] = useState(true);
+    const [statusFilter, setStatusFilter] = useState<"ativos" | "concluidos">("ativos");
 
     useEffect(() => {
-        getLeads()
+        setLoading(true);
+
+        getLeads({
+            page: 1,
+            limit: 8,
+            status: statusFilter === "ativos" ? "pendente" : "concluido"
+        })
             .then(setLeads)
             .catch((err) => console.error("Erro ao buscar leads:", err))
             .finally(() => setLoading(false));
-    }, []);
+    }, [statusFilter]);
 
     return (
         <main className="p-10">
@@ -34,12 +41,11 @@ export default function Home() {
                 <LeadCard />
                 <LeadCard />
                 <LeadCard />
-
                 {/* Container branco com informações */}
                 <div className="w-full mt-10 mx-auto rounded-xl border shadow-sm bg-white">
                     {/* Filtro de status */}
                     <div className="p-6">
-                        <StatusFilter />
+                        <StatusFilter value={statusFilter} onChange={setStatusFilter} />
                     </div>
 
                     {/* Filtros */}

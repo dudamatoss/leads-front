@@ -27,12 +27,12 @@ export function CopyableText({ text, className }: CopyableTextProps) {
                 role="button"
                 title="Copiar"
             >
-        {/* Ícone Copy */}
+        {/* icone de copiar  */}
                 <Copy
                     className={`absolute top-0 left-0 w-4 h-4 text-muted-foreground transition-all duration-300 ease-in-out 
             ${copied ? "opacity-0 scale-75" : "opacity-100 scale-100 cursor-pointer"}`}
                 />
-                {/* Ícone Check */}
+                {/* icone de quando o texto foi copiado */}
                 <BadgeCheck
                     className={`absolute top-0 left-0 w-4 h-4 text-green-600 transition-all duration-300 ease-in-out 
             ${copied ? "opacity-100 scale-100" : "opacity-0 scale-75"}`}
