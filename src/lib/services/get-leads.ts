@@ -6,12 +6,13 @@ interface GetLeadsParams {
     page: number;
     limit: number;
     status?: string;
+    interesse?: string;
 
 }
 
 export async function getLeads(params: GetLeadsParams): Promise<LeadType[]> {
     const response = await apiLead.get<LeadType[]>("/leads/filtro", {
-        params, // envia como query string
+        params,
     });
     return response.data;
 }

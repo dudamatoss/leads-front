@@ -19,17 +19,23 @@ export function OriginFilter() {
     )
 }
 
-export function TipesFilter() {
+{/*Filtro dopDown de tipos */}
+interface TypesFilterProps {
+    value: "revenda" | "utilizacao" | "todos";
+    onChange: (val: "revenda" | "utilizacao"| "todos") => void;
+}
+
+export function TypesFilter({value, onChange}: TypesFilterProps) {
     return(
-        <Select onValueChange={(value) => console.log("Selecionado:", value)}>
+        <Select value={value} onValueChange={(val) => onChange(val as "revenda" | "utilizacao" | "todos")}>
             <SelectTrigger className="w-[200px] rounded-md border border-gray-300 focus:outline-none "
             >
-                <SelectValue placeholder= "Selecione..."></SelectValue>
+                <SelectValue ></SelectValue>
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="all">Todos os Tipos</SelectItem>
-                <SelectItem value="revenda">Utilização</SelectItem>
-                <SelectItem value="utilizacao">Revenda</SelectItem>
+                <SelectItem value="todos">Todos os Tipos</SelectItem>
+                <SelectItem value="revenda">Revenda</SelectItem>
+                <SelectItem value="utilizacao">Utilização</SelectItem>
 
             </SelectContent>
         </Select>

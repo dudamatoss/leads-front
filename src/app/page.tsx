@@ -1,13 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-
 import { LeadRow } from "@/components/Information/LeadRow";
 import { LeadCard } from "@/components/Cards/lead-card";
 import { StatusFilter } from "@/components/Filters/StatusFilter";
 import { SearchFilter } from "@/components/Filters/SeaechFilter";
-import { OriginFilter, TipesFilter } from "@/components/Filters/DropDownFilter";
+import {OriginFilter, TypesFilter} from "@/components/Filters/DropDownFilter";
 import { LeadsHeader } from "@/components/Information/LeadsHeader";
 import {getLeads} from "@/lib/services/get-leads";
 import {LeadType} from "@/schemas/leads-schemas";
@@ -16,6 +14,7 @@ export default function Home() {
     const [leads, setLeads] = useState<LeadType[]>([]);
     const [loading, setLoading] = useState(true);
     const [statusFilter, setStatusFilter] = useState<"ativos" | "concluidos">("ativos");
+    const [typeFilter, setTypeFilter] = useState<"revenda" | "utilizacao" | "todos">("revenda");
 
     useEffect(() => {
         setLoading(true);
@@ -23,12 +22,13 @@ export default function Home() {
         getLeads({
             page: 1,
             limit: 8,
-            status: statusFilter === "ativos" ? "pendente" : "concluido"
+            status: statusFilter === "ativos" ? "pendente" : "concluido",
+            interesse: typeFilter !== "todos" ? typeFilter : undefined,
         })
             .then(setLeads)
             .catch((err) => console.error("Erro ao buscar leads:", err))
             .finally(() => setLoading(false));
-    }, [statusFilter]);
+    }, [statusFilter, typeFilter]);
 
     return (
         <main className="p-10">
@@ -52,7 +52,7 @@ export default function Home() {
                     <div className="flex flex-wrap gap-4 p-6">
                         <SearchFilter placeholder="Buscar por nome..." />
                         <OriginFilter />
-                        <TipesFilter />
+                        <TypesFilter value={typeFilter} onChange ={setTypeFilter} />
                     </div>
 
                     {/* Título e subtítulo */}
