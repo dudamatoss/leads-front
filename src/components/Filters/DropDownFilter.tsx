@@ -2,18 +2,22 @@
 
 import {Select,SelectContent,SelectValue,SelectItem,SelectTrigger} from "@/components/ui/select";
 
-export function OriginFilter() {
+interface OriginFilterProps {
+    value: "Instagram"| "Facebook" | "Google" | "todos";
+    onChange: (value: "Instagram"| "Facebook" | "Google" | "todos") => void;
+}
+export function OriginFilter({value, onChange}: OriginFilterProps) {
     return(
-        <Select onValueChange={(value) => console.log("Selecionado:", value)}>
+        <Select value={value} onValueChange={(value) => onChange(value as "Instagram"| "Facebook" | "Google" | "todos")}>
             <SelectTrigger className="w-[200px] rounded-md border border-gray-300 focus:outline-none focus:ring-0 "
             >
-                <SelectValue placeholder= "Selecione.."></SelectValue>
+                <SelectValue></SelectValue>
             </SelectTrigger>
             <SelectContent>
-                <SelectItem value="all">Todas as Origens</SelectItem>
-                <SelectItem value="instagram">Instagram</SelectItem>
-                <SelectItem value="facebook">Facebook</SelectItem>
-                <SelectItem value="google">Google</SelectItem>
+                <SelectItem value="todos">Todas as Origens</SelectItem>
+                <SelectItem value="Instagram">Instagram</SelectItem>
+                <SelectItem value="Facebook">Facebook</SelectItem>
+                <SelectItem value="Google">Google</SelectItem>
             </SelectContent>
         </Select>
     )
@@ -22,12 +26,12 @@ export function OriginFilter() {
 {/*Filtro dopDown de tipos */}
 interface TypesFilterProps {
     value: "revenda" | "utilizacao" | "todos";
-    onChange: (val: "revenda" | "utilizacao"| "todos") => void;
+    onChange: (value: "revenda" | "utilizacao"| "todos") => void;
 }
 
 export function TypesFilter({value, onChange}: TypesFilterProps) {
     return(
-        <Select value={value} onValueChange={(val) => onChange(val as "revenda" | "utilizacao" | "todos")}>
+        <Select value={value} onValueChange={(value) => onChange(value as "revenda" | "utilizacao" | "todos")}>
             <SelectTrigger className="w-[200px] rounded-md border border-gray-300 focus:outline-none "
             >
                 <SelectValue ></SelectValue>
@@ -36,7 +40,6 @@ export function TypesFilter({value, onChange}: TypesFilterProps) {
                 <SelectItem value="todos">Todos os Tipos</SelectItem>
                 <SelectItem value="revenda">Revenda</SelectItem>
                 <SelectItem value="utilizacao">Utilização</SelectItem>
-
             </SelectContent>
         </Select>
     )

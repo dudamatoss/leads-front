@@ -7,6 +7,7 @@ interface GetLeadsParams {
     limit: number;
     status?: string;
     interesse?: string;
+    fonte?: string;
 
 }
 

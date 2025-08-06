@@ -15,6 +15,7 @@ export default function Home() {
     const [loading, setLoading] = useState(true);
     const [statusFilter, setStatusFilter] = useState<"ativos" | "concluidos">("ativos");
     const [typeFilter, setTypeFilter] = useState<"revenda" | "utilizacao" | "todos">("revenda");
+    const [originFilter, setOriginFilter] = useState<"Instagram"| "Facebook" | "Google" | "todos">("todos");
 
     useEffect(() => {
         setLoading(true);
@@ -22,13 +23,14 @@ export default function Home() {
         getLeads({
             page: 1,
             limit: 8,
-            status: statusFilter === "ativos" ? "pendente" : "concluido",
+            status: statusFilter === "ativos" ? "ativo" : "concluido",
             interesse: typeFilter !== "todos" ? typeFilter : undefined,
+            fonte: originFilter !== "todos" ? originFilter : undefined,
         })
             .then(setLeads)
             .catch((err) => console.error("Erro ao buscar leads:", err))
             .finally(() => setLoading(false));
-    }, [statusFilter, typeFilter]);
+    }, [statusFilter, typeFilter, originFilter]);
 
     return (
         <main className="p-10">
@@ -51,7 +53,7 @@ export default function Home() {
                     {/* Filtros */}
                     <div className="flex flex-wrap gap-4 p-6">
                         <SearchFilter placeholder="Buscar por nome..." />
-                        <OriginFilter />
+                        <OriginFilter value={originFilter} onChange={setOriginFilter} />
                         <TypesFilter value={typeFilter} onChange ={setTypeFilter} />
                     </div>
 
