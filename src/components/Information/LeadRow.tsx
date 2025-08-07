@@ -20,7 +20,8 @@ export function LeadRow({ lead }: Props) {
             {/* Contato */}
             <div className="flex items-center gap-3">
                 <div className="w-9 h-9 bg-orange-500/80 text-white font-semibold flex items-center justify-center rounded-full text-xs uppercase">
-                    {(lead.nome ?? "?").slice(0, 2)}
+                    {(lead.nome ?? "" +
+                        "-").slice(0, 2)}
                 </div>
                 <div>
                     {lead.nome?.trim() && (
@@ -36,10 +37,10 @@ export function LeadRow({ lead }: Props) {
             </div>
 
             {/* Origem */}
-            <span className="text-gray-600 font-medium p-5">{lead.fonte}</span>
+            <span className="text-gray-600 font-medium p-5">{lead.fonte?.trim() ? (lead.fonte) : (<span className="text-gray-400 font-normal italic">Não informado</span>) }</span>
 
             {/* Anúncio */}
-            <span className="text-orange-400 font-normal">{lead.anuncio}</span>
+            <span className="text-orange-400 font-normal">{lead.anuncio?.trim() ? (lead.anuncio) : (<span className="text-gray-400 font-normal italic">Não informado</span>)}</span>
 
             {/* Tipo (interesse) */}
             <TypeDropdown value={lead.interesse} />
