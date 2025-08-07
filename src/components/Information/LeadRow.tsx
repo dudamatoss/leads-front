@@ -7,6 +7,7 @@ import { CopyableText } from "@/components/Copy/CopyText";
 import { StatusButton } from "@/components/Information/ItemsRow/StatusCheck";
 import {putLead} from "@/lib/services/put-leads";
 import {TypeDropdown} from "@/components/Information/ItemsRow/TypeDropDown";
+import {ParceiroInput} from "@/components/Information/ItemsRow/ParceiroInput";
 
 type Props = {
     lead: LeadType;
@@ -72,11 +73,15 @@ export function LeadRow({ lead }: Props) {
             </span>
 
             {/* Parceiro */}
-            <Input
-                defaultValue={lead.parceiro}
-                placeholder="Parceiro..."
-                className="h-7 w-[140px] text-sm px-2 py-1 focus-visible:border-orange-500 focus-visible:ring-orange-300 focus-visible:ring-1"
-            />
+            <ParceiroInput initialValue={lead.parceiro ?? ""} onConfirm={
+                async  (newValue) => {
+                    await putLead({
+                        id_leads_comercial: lead.id_leads_comercial,
+                        parceiro: newValue,
+                    })
+                }
+            }/>
+
             {/* Status */}
             <div className="justify-self-end">
                 <StatusButton
