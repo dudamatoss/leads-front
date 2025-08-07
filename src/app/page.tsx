@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { LeadRow } from "@/components/Information/LeadRow";
-import { LeadCard } from "@/components/Cards/lead-card";
+import { LeadCard } from "@/components/Cards/LeadCard";
 import { StatusFilter } from "@/components/Filters/StatusFilter";
 import { SearchFilter } from "@/components/Filters/SeaechFilter";
 import {OriginFilter, TypesFilter} from "@/components/Filters/DropDownFilter";
 import { LeadsHeader } from "@/components/Information/LeadsHeader";
-import {getLeads} from "@/lib/services/get-leads";
-import {LeadType} from "@/schemas/leads-schemas";
+import {getLeads, getLeadsTotais} from "@/lib/services/get-leads";
+import {LeadsTotais, LeadType} from "@/schemas/leads-schemas";
+import {Handshake, UserCheck, Users2} from "lucide-react";
 
 export default function Home() {
     const [leads, setLeads] = useState<LeadType[]>([]);
@@ -16,9 +17,27 @@ export default function Home() {
     const [statusFilter, setStatusFilter] = useState<"ativos" | "concluidos">("ativos");
     const [typeFilter, setTypeFilter] = useState<"revenda" | "utilizacao" | "todos">("revenda");
     const [originFilter, setOriginFilter] = useState<"Instagram"| "Facebook" | "Google" | "todos">("todos");
+    const [totais, setTotais] = useState<LeadsTotais | null>(null);
+
+
+    useEffect(() => {
+        getLeadsTotais({
+            page: 1,
+            limit: 999999,
+            status: statusFilter === "ativos" ? "ativo" : "concluido",
+            interesse: typeFilter !== "todos" ? typeFilter : undefined,
+            fonte: originFilter !== "todos" ? originFilter : undefined,
+        })
+            .then((data) => {
+                setTotais(data);
+            })
+            .catch((err) => console.error("Erro ao buscar totais:", err));
+    }, [statusFilter, typeFilter, originFilter]);
+
 
     useEffect(() => {
         setLoading(true);
+
 
         getLeads({
             page: 1,
@@ -39,9 +58,24 @@ export default function Home() {
                 <h3 className="text-gray-500 text-lg mb-3">Gerencie e vizualize todas as leads</h3>
             </div>
             <div className="flex flex-wrap justify-between">
-                <LeadCard />
-                <LeadCard />
-                <LeadCard />
+                <LeadCard
+                    title="Leads Ativos"
+                    value={totais?.totalAtivos ?? 0}
+                    icon={Users2}
+                />
+
+                <LeadCard
+                    title="Leads Revenda"
+                    value={totais?.totalRevenda ?? 0}
+                    icon={UserCheck}
+                />
+
+                <LeadCard
+                    title="Leads Utilização"
+                    value={totais?.totalUtilizacao ?? 0}
+                    icon={Handshake}
+                />
+
                 {/* Container branco com informações */}
                 <div className="w-full mt-10 mx-auto rounded-xl border shadow-sm bg-white">
                     {/* Filtro de status */}

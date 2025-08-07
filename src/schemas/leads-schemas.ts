@@ -3,7 +3,7 @@ import { z } from "zod";
 export const LeadSchema = z.object({
     id_leads_comercial: z.number(),
     nome: z.string(),
-    email: z.string().email(),
+    email: z.string(),
     telefone: z.string(),
     cnpj: z.string(),
     interesse: z.string(),
@@ -16,3 +16,11 @@ export const LeadSchema = z.object({
 });
 
 export type LeadType = z.infer<typeof LeadSchema>;
+
+export const LeadsTotaisSchema = z.object({
+    totalAtivos: z.number(),
+    totalRevenda: z.number(),
+    totalUtilizacao: z.number(),
+});
+
+export type LeadsTotais = z.infer<typeof LeadsTotaisSchema>;

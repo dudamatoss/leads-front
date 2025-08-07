@@ -1,5 +1,6 @@
-import { LeadType } from "@/schemas/leads-schemas";
+import {LeadsTotais, LeadType} from "@/schemas/leads-schemas";
 import apiLead from "@/api/api-leads";
+
 
 
 interface GetLeadsParams {
@@ -13,6 +14,16 @@ interface GetLeadsParams {
 
 export async function getLeads(params: GetLeadsParams): Promise<LeadType[]> {
     const response = await apiLead.get<LeadType[]>("/leads/filtro", {
+        params,
+    });
+    return response.data;
+}
+
+
+
+
+export async function getLeadsTotais(params?: GetLeadsParams): Promise<LeadsTotais> {
+    const response = await apiLead.get<LeadsTotais>("/leads/totais", {
         params,
     });
     return response.data;
