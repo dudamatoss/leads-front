@@ -4,8 +4,9 @@ import { useState } from "react";
 import { LeadType } from "@/schemas/leads-schemas";
 import { Input } from "@/components/ui/input";
 import { CopyableText } from "@/components/Copy/CopyText";
-import { TypeDropdown } from "@/components/Information/ItemsRow/TypeDropDown";
 import { StatusButton } from "@/components/Information/ItemsRow/StatusCheck";
+import {putLead} from "@/lib/services/put-leads";
+import {TypeDropdown} from "@/components/Information/ItemsRow/TypeDropDown";
 
 type Props = {
     lead: LeadType;
@@ -13,6 +14,8 @@ type Props = {
 
 export function LeadRow({ lead }: Props) {
     const [localStatus, setLocalStatus] = useState<"ativo" | "concluido">(lead.status as "ativo" | "concluido");
+    const [localInteresse, setLocalInteresse] = useState<"revenda" | "utilizacao">(lead.interesse as "revenda" | "utilizacao");
+
 
 
     return (
@@ -43,12 +46,30 @@ export function LeadRow({ lead }: Props) {
             <span className="text-orange-400 font-normal">{lead.anuncio?.trim() ? (lead.anuncio) : (<span className="text-gray-400 font-normal italic">Não informado</span>)}</span>
 
             {/* Tipo (interesse) */}
-            <TypeDropdown value={lead.interesse} />
+            <div>
+                <TypeDropdown
+                    value={localInteresse}
+                    onChange={async (newValue) => {
+                        try {
+                            await putLead({
+                                id_leads_comercial: lead.id_leads_comercial,
+                                interesse: newValue,
+                            });
+                            setLocalInteresse(newValue);
+                        } catch (error) {
+                            console.error("Erro ao atualizar interesse:", error);
+                        }
+                    }}
+                />
+            </div>
 
             {/* Data */}
             <span className="text-gray-600 font-medium whitespace-nowrap">
-        {new Date(lead.data_hora).toLocaleString("pt-BR")}
-      </span>
+                {`${new Date(lead.data_hora).toLocaleDateString("pt-BR")} ${new Date(lead.data_hora).toLocaleTimeString("pt-BR", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                })}`}
+            </span>
 
             {/* Parceiro */}
             <Input
@@ -60,8 +81,18 @@ export function LeadRow({ lead }: Props) {
             <div className="justify-self-end">
                 <StatusButton
                     status={localStatus}
-                    onClick={() => {
-                        setLocalStatus((prev) => (prev === "ativo" ? "concluido" : "ativo"));
+                    onClick={async () => {
+                        const newStatus = localStatus === "ativo" ? "concluido" : "ativo";
+                        try{
+                           await putLead({
+                               id_leads_comercial: lead.id_leads_comercial,
+                               status: newStatus,
+                           });
+                           setLocalStatus(newStatus);
+
+                    }catch(e){
+                            console.log("Erro ao atualizar: ",e);
+                        }
                     }}
                 />
             </div>

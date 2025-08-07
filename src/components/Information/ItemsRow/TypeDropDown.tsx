@@ -1,25 +1,30 @@
-
 "use client";
 
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import {
+    Select,
+    SelectTrigger,
+    SelectValue,
+    SelectContent,
+    SelectItem,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
-interface TypeRowDropdownProps {
-    value: string;
-    onChange?: (value: string) => void;
+interface InteresseButtonProps {
+    value: "revenda" | "utilizacao";
+    onChange: (newValue: "revenda" | "utilizacao") => void;
 }
 
-export function TypeDropdown({ value, onChange }: TypeRowDropdownProps) {
+export function TypeDropdown({ value, onChange }: InteresseButtonProps) {
     const normalized = value.toLowerCase();
 
     return (
-        <Select value={value} onValueChange={onChange}>
+        <Select value={value} onValueChange={(val) => onChange(val as "revenda" | "utilizacao")}>
             <SelectTrigger
                 className={cn(
-                    "text-xs w-fit px-3 h-6 rounded-full font-medium",
+                    "text-xs w-fit px-3 h-8 rounded-md font-medium border border-neutral-200 bg-white",
                     normalized === "revenda"
-                        ? "bg-blue-100 text-blue-700"
-                        : "bg-green-100 text-green-700"
+                        ? "text-orange-500 hover:bg-orange-100"
+                        : "text-purple-500 hover:bg-purple-100"
                 )}
             >
                 <SelectValue />

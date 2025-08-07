@@ -9,7 +9,6 @@ import {OriginFilter, TypesFilter} from "@/components/Filters/DropDownFilter";
 import { LeadsHeader } from "@/components/Information/LeadsHeader";
 import {getLeads} from "@/lib/services/get-leads";
 import {LeadType} from "@/schemas/leads-schemas";
-import {formatInteresse} from "@/utils/InteresseFormat";
 
 export default function Home() {
     const [leads, setLeads] = useState<LeadType[]>([]);
