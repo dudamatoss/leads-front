@@ -18,9 +18,10 @@ export const LeadSchema = z.object({
 export type LeadType = z.infer<typeof LeadSchema>;
 
 export const LeadsTotaisSchema = z.object({
-    totalAtivos: z.number(),
+    totalStatus: z.number(),
     totalRevenda: z.number(),
     totalUtilizacao: z.number(),
+    totalGeral: z.number(),
 });
 
 export type LeadsTotais = z.infer<typeof LeadsTotaisSchema>;

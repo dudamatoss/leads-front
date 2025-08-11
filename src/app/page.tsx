@@ -21,16 +21,18 @@ export default function Home() {
 
 
     useEffect(() => {
+        const statusParam = statusFilter === "ativos" ? "ativo" : "concluido";
+        const interesseParam = typeFilter !== "todos" ? typeFilter : undefined;
+        const fonteParam = originFilter !== "todos" ? originFilter : undefined;
+
         getLeadsTotais({
             page: 1,
-            limit: 999999,
-            status: statusFilter === "ativos" ? "ativo" : "concluido",
-            interesse: typeFilter !== "todos" ? typeFilter : undefined,
-            fonte: originFilter !== "todos" ? originFilter : undefined,
+            limit: 999999999999,
+            status: statusParam,
+            interesse: interesseParam,
+            fonte: fonteParam,
         })
-            .then((data) => {
-                setTotais(data);
-            })
+            .then(setTotais)
             .catch((err) => console.error("Erro ao buscar totais:", err));
     }, [statusFilter, typeFilter, originFilter]);
 
@@ -60,7 +62,7 @@ export default function Home() {
             <div className="flex flex-wrap justify-between">
                 <LeadCard
                     title="Leads Ativos"
-                    value={totais?.totalAtivos ?? 0}
+                    value={totais?.totalStatus ?? 0}
                     icon={Users2}
                 />
 
@@ -90,7 +92,7 @@ export default function Home() {
                     </div>
                     {/* Título e subtítulo */}
                     <div className="pl-6 pt-6 pb-6">
-                        <h2 className="pb-1 text-2xl font-bold">{leads.length} Leads</h2>
+                        <h2 className="pb-1 text-2xl font-bold">{totais?.totalGeral ?? leads.length} Leads</h2>
                         <h3 className="text-gray-500 text-l">Todas as leads registradas</h3>
                     </div>
                     {/* Cabeçalho da tabela */}
