@@ -12,9 +12,9 @@ interface GetLeadsParams {
 
 }
 
-export async function getLeads(params: GetLeadsParams): Promise<LeadType[]> {
+export async function getLeads({page,... params}: GetLeadsParams): Promise<LeadType[]> {
     const response = await apiLead.get<LeadType[]>("/leads/filtro", {
-        params,
+        params: { ...params, page: Math.max(1, page) },
     });
     return response.data;
 }
@@ -22,9 +22,9 @@ export async function getLeads(params: GetLeadsParams): Promise<LeadType[]> {
 
 
 
-export async function getLeadsTotais(params?: GetLeadsParams): Promise<LeadsTotais> {
+export async function getLeadsTotais({page, ... params}: GetLeadsParams): Promise<LeadsTotais> {
     const response = await apiLead.get<LeadsTotais>("/leads/totais", {
-        params,
+        params: { ...params, page: Math.max(1, page) },
     });
     return response.data;
 }

@@ -12,6 +12,8 @@ import {LeadsTotais, LeadType} from "@/schemas/leads-schemas";
 import {Handshake, UserCheck, Users2} from "lucide-react";
 import {PaginationControls} from "@/components/Pagination/Pagination";
 
+const ITEMS_FOR_PAGE = 8;
+
 export default function Home() {
     const [leads, setLeads] = useState<LeadType[]>([]);
     const [loading, setLoading] = useState(true);
@@ -19,6 +21,7 @@ export default function Home() {
     const [typeFilter, setTypeFilter] = useState<"revenda" | "utilizacao" | "todos">("revenda");
     const [originFilter, setOriginFilter] = useState<"Instagram"| "Facebook" | "Google" | "todos">("todos");
     const [totais, setTotais] = useState<LeadsTotais | null>(null);
+    const [page, setPage] = useState(1);
 
 
     useEffect(() => {
@@ -27,8 +30,8 @@ export default function Home() {
         const fonteParam = originFilter !== "todos" ? originFilter : undefined;
 
         getLeadsTotais({
-            page: 1,
-            limit: 999999999999,
+            page,
+            limit: ITEMS_FOR_PAGE,
             status: statusParam,
             interesse: interesseParam,
             fonte: fonteParam,
@@ -37,14 +40,16 @@ export default function Home() {
             .catch((err) => console.error("Erro ao buscar totais:", err));
     }, [statusFilter, typeFilter, originFilter]);
 
+    useEffect(() => {
+        setPage(1);
+    }, [statusFilter, typeFilter, originFilter]);
 
     useEffect(() => {
         setLoading(true);
 
-
         getLeads({
-            page: 1,
-            limit: 8,
+            page,
+            limit: ITEMS_FOR_PAGE,
             status: statusFilter === "ativos" ? "ativo" : "concluido",
             interesse: typeFilter !== "todos" ? typeFilter : undefined,
             fonte: originFilter !== "todos" ? originFilter : undefined,
@@ -52,7 +57,7 @@ export default function Home() {
             .then(setLeads)
             .catch((err) => console.error("Erro ao buscar leads:", err))
             .finally(() => setLoading(false));
-    }, [statusFilter, typeFilter, originFilter]);
+    }, [statusFilter, typeFilter, originFilter, page]);
 
     return (
         <main className="p-10">
@@ -111,14 +116,17 @@ export default function Home() {
                                 <LeadRow key={lead.id_leads_comercial} lead={lead} />
                             ))
                         )}
+                        <div>
+                            <PaginationControls
+                            page={page}
+                            totalPages={Math.max(1, totais?.totalPaginas ?? 0)}
+                            onPageChange={setPage}
+                            className="px-6 pb-6"
+                        />
+                        </div>
+
                     </div>
                 </div>
-                <PaginationControls
-                    page={page}
-                    totalPages={Math.max(1, totais?.totalPaginas ?? 1)}
-                    onPageChange={(p) => setPage(p)}
-                    className="px-6 pb-6"
-                />
             </div>
         </main>
     );

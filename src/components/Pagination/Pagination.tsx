@@ -6,27 +6,26 @@ import {
     PaginationContent,
     PaginationItem,
     PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
 } from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type Props = {
     page: number;
     totalPages: number;
     onPageChange: (page: number) => void;
     className?: string;
-    scrollTopOnChange?: boolean;    // padrão: true
+    scrollTopOnChange?: boolean;
 };
 
-function getPagesToShow(total: number, current: number) {
-    // Desenha: 1 … current-1 current current+1 … total
-    const set = new Set<number>([1, total, current]);
-    if (current > 1) set.add(current - 1);
-    if (current < total) set.add(current + 1);
-    return Array.from(set)
-        .filter((p) => p >= 1 && p <= total)
-        .sort((a, b) => a - b);
+function clamp(n: number, min: number, max: number) {
+    return Math.max(min, Math.min(max, n));
+}
+function pagesWindow(current: number, total: number, size = 5) {
+    const half = Math.floor(size / 2);
+    const start = clamp(current - half, 1, Math.max(1, total - size + 1));
+    const end = Math.min(total, start + size - 1);
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 }
 
 export function PaginationControls({
@@ -36,72 +35,117 @@ export function PaginationControls({
                                        className,
                                        scrollTopOnChange = true,
                                    }: Props) {
-    const pages = getPagesToShow(totalPages, page);
-
     const go = (p: number) => {
-        if (p < 1 || p > totalPages || p === page) return;
+        if (p === page || p < 1 || p > totalPages) return;
         onPageChange(p);
-        if (scrollTopOnChange) {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }
+        if (scrollTopOnChange) window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
-    return (
-        <div className={cn("flex items-center justify-between w-full", className)}>
-      <span className="text-sm text-muted-foreground">
-        Página {page} de {totalPages}
-      </span>
+    const core = pagesWindow(page, totalPages, 5);
+    const showLeftDots = core[0] > 2;
+    const showRightDots = core[core.length - 1] < totalPages - 1;
 
+    const PageBtn = ({ p }: { p: number }) => (
+        <PaginationItem className="mx-1">
+            <PaginationLink
+                href="#"
+                aria-current={p === page ? "page" : undefined}
+                className={cn(
+                    // número circular
+                    "h-10 w-10 rounded-full grid place-items-center text-sm font-medium no-underline",
+                    "transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:ring-offset-2",
+                    p === page
+                        ? "bg-orange-500 text-white shadow-sm hover:bg-orange-600"
+                        : "text-foreground/80 hover:text-foreground hover:bg-orange-50"
+                )}
+                onClick={(e) => {
+                    e.preventDefault();
+                    go(p);
+                }}
+            >
+                {p}
+            </PaginationLink>
+        </PaginationItem>
+    );
+
+    return (
+        <div
+            className={cn(
+                "w-full flex justify-center py-5",
+                "mt-4 rounded-xl border bg-white/80 backdrop-blur-sm",
+                className
+            )}
+        >
             <Pagination>
-                <PaginationContent>
-                    <PaginationItem>
-                        <PaginationPrevious
+                <PaginationContent className="gap-1 items-center">
+                    {/* Anterior */}
+                    <PaginationItem className="mx-2">
+                        <PaginationLink
                             href="#"
                             aria-disabled={page === 1}
-                            className={page === 1 ? "pointer-events-none opacity-50" : ""}
+                            className={cn(
+                                // retangular/fluid
+                                "h-10 w-auto px-4 rounded-lg text-sm font-medium flex items-center gap-2 no-underline",
+                                "transition-all hover:bg-orange-100/70 hover: active:scale-[.90] hover:text-orange-600",
+                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:ring-offset-2",
+                                page === 1
+                                    ? "opacity-50 pointer-events-none"
+                                    : "text-orange-600"
+                            )}
                             onClick={(e) => {
                                 e.preventDefault();
                                 go(page - 1);
                             }}
-                        />
+                        >
+                            <ChevronLeft className="h-4 w-4" />
+                            Anterior
+                        </PaginationLink>
                     </PaginationItem>
 
-                    {pages.map((p, i, arr) => {
-                        const prev = arr[i - 1];
-                        const showEllipsis = i > 0 && p - (prev ?? 0) > 1;
-                        return (
-                            <React.Fragment key={p}>
-                                {showEllipsis && (
-                                    <PaginationItem>
-                                        <span className="px-2 select-none">…</span>
-                                    </PaginationItem>
-                                )}
-                                <PaginationItem>
-                                    <PaginationLink
-                                        href="#"
-                                        isActive={p === page}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            go(p);
-                                        }}
-                                    >
-                                        {p}
-                                    </PaginationLink>
-                                </PaginationItem>
-                            </React.Fragment>
-                        );
-                    })}
+                    {/* primeira + ellipsis esquerda */}
+                    {totalPages >= 1 && !core.includes(1) && <PageBtn p={1} />}
+                    {showLeftDots && (
+                        <PaginationItem className="mx-1">
+                            <span className="px-2 text-muted-foreground select-none">…</span>
+                        </PaginationItem>
+                    )}
 
-                    <PaginationItem>
-                        <PaginationNext
+                    {/* páginas centrais */}
+                    {core.map((p) => (
+                        <PageBtn key={p} p={p} />
+                    ))}
+
+                    {/* ellipsis direita + última */}
+                    {showRightDots && (
+                        <PaginationItem className="mx-1">
+                            <span className="px-2 text-muted-foreground select-none">…</span>
+                        </PaginationItem>
+                    )}
+                    {totalPages > 1 && !core.includes(totalPages) && (
+                        <PageBtn p={totalPages} />
+                    )}
+
+                    {/* Próximo */}
+                    <PaginationItem className="mx-4">
+                        <PaginationLink
                             href="#"
                             aria-disabled={page === totalPages}
-                            className={page === totalPages ? "pointer-events-none opacity-50" : ""}
+                            className={cn(
+                                "h-10 w-auto px-4 rounded-lg text-sm font-medium flex items-center gap-2 no-underline",
+                                "transition-all hover:bg-orange-100/70 hover: active:scale-[.90] hover:text-orange-600",
+                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:ring-offset-2",
+                                page === totalPages
+                                    ? "opacity-50 pointer-events-none"
+                                    : "text-orange-600"
+                            )}
                             onClick={(e) => {
                                 e.preventDefault();
                                 go(page + 1);
                             }}
-                        />
+                        >
+                            Próximo
+                            <ChevronRight className="h-4 w-4" />
+                        </PaginationLink>
                     </PaginationItem>
                 </PaginationContent>
             </Pagination>
