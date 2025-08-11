@@ -9,6 +9,7 @@ interface GetLeadsParams {
     status?: string;
     interesse?: string;
     fonte?: string;
+    busca?: string;
 
 }
 

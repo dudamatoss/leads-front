@@ -22,6 +22,7 @@ export default function Home() {
     const [originFilter, setOriginFilter] = useState<"Instagram"| "Facebook" | "Google" | "todos">("todos");
     const [totais, setTotais] = useState<LeadsTotais | null>(null);
     const [page, setPage] = useState(1);
+    const [busca, setBusca] = useState("");
 
 
     useEffect(() => {
@@ -30,19 +31,20 @@ export default function Home() {
         const fonteParam = originFilter !== "todos" ? originFilter : undefined;
 
         getLeadsTotais({
-            page,
+            page: 1,
             limit: ITEMS_FOR_PAGE,
             status: statusParam,
             interesse: interesseParam,
             fonte: fonteParam,
+            busca,
         })
             .then(setTotais)
             .catch((err) => console.error("Erro ao buscar totais:", err));
-    }, [statusFilter, typeFilter, originFilter]);
+    }, [statusFilter, typeFilter, originFilter,busca]);
 
     useEffect(() => {
         setPage(1);
-    }, [statusFilter, typeFilter, originFilter]);
+    }, [statusFilter, typeFilter, originFilter,busca]);
 
     useEffect(() => {
         setLoading(true);
@@ -53,11 +55,12 @@ export default function Home() {
             status: statusFilter === "ativos" ? "ativo" : "concluido",
             interesse: typeFilter !== "todos" ? typeFilter : undefined,
             fonte: originFilter !== "todos" ? originFilter : undefined,
+            busca,
         })
             .then(setLeads)
             .catch((err) => console.error("Erro ao buscar leads:", err))
             .finally(() => setLoading(false));
-    }, [statusFilter, typeFilter, originFilter, page]);
+    }, [statusFilter, typeFilter, originFilter, page, busca]);
 
     return (
         <main className="p-10">
@@ -92,7 +95,7 @@ export default function Home() {
                     </div>
                     {/* Filtros */}
                     <div className="flex flex-wrap gap-4 p-6">
-                        <SearchFilter placeholder="Buscar por nome..." />
+                        <SearchFilter placeholder="Buscar por nome..." value={busca} onChange={setBusca}/>
                         <OriginFilter value={originFilter} onChange={setOriginFilter} />
                         <TypesFilter value={typeFilter} onChange ={setTypeFilter} />
                     </div>
