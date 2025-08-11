@@ -10,6 +10,7 @@ import { LeadsHeader } from "@/components/Information/LeadsHeader";
 import {getLeads, getLeadsTotais} from "@/lib/services/get-leads";
 import {LeadsTotais, LeadType} from "@/schemas/leads-schemas";
 import {Handshake, UserCheck, Users2} from "lucide-react";
+import {PaginationControls} from "@/components/Pagination/Pagination";
 
 export default function Home() {
     const [leads, setLeads] = useState<LeadType[]>([]);
@@ -112,6 +113,12 @@ export default function Home() {
                         )}
                     </div>
                 </div>
+                <PaginationControls
+                    page={page}
+                    totalPages={Math.max(1, totais?.totalPaginas ?? 1)}
+                    onPageChange={(p) => setPage(p)}
+                    className="px-6 pb-6"
+                />
             </div>
         </main>
     );
