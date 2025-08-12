@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LeadRow } from "@/components/Information/LeadRow";
+import { LeadRow } from "@/components/LeadsRow/LeadRow";
 import { LeadCard } from "@/components/Cards/LeadCard";
 import { StatusFilter } from "@/components/Filters/StatusFilter";
 import { SearchFilter } from "@/components/Filters/SeaechFilter";
 import {OriginFilter, TypesFilter} from "@/components/Filters/DropDownFilter";
-import { LeadsHeader } from "@/components/Information/LeadsHeader";
+import { LeadsHeader } from "@/components/LeadsRow/LeadsHeader";
 import {getLeads, getLeadsTotais} from "@/lib/services/get-leads";
 import {LeadsTotais, LeadType} from "@/schemas/leads-schemas";
 import {Handshake, UserCheck, Users2} from "lucide-react";

@@ -16,6 +16,7 @@ export function ParceiroInput({initialValue, onConfirm, placeholder = "Digite...
     const [isPut, setIsPut] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
+
     const hasChanged = value.trim() !== initialValue.trim();
 
     const handleConfirm = async () => {

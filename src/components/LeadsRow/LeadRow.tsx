@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { LeadType } from "@/schemas/leads-schemas";
-import { Input } from "@/components/ui/input";
 import { CopyableText } from "@/components/Copy/CopyText";
-import { StatusButton } from "@/components/Information/ItemsRow/StatusCheck";
+import { StatusButton } from "@/components/LeadsRow/ItemsRow/StatusCheck";
 import {putLead} from "@/lib/services/put-leads";
-import {TypeDropdown} from "@/components/Information/ItemsRow/TypeDropDown";
-import {ParceiroInput} from "@/components/Information/ItemsRow/ParceiroInput";
+import {TypeDropdown} from "@/components/LeadsRow/ItemsRow/TypeDropDown";
+import {ParceiroInput} from "@/components/LeadsRow/ItemsRow/ParceiroInput";
 
 type Props = {
     lead: LeadType;
@@ -16,7 +15,6 @@ type Props = {
 export function LeadRow({ lead }: Props) {
     const [localStatus, setLocalStatus] = useState<"ativo" | "concluido">(lead.status as "ativo" | "concluido");
     const [localInteresse, setLocalInteresse] = useState<"revenda" | "utilizacao">(lead.interesse as "revenda" | "utilizacao");
-
 
 
     return (
@@ -57,6 +55,7 @@ export function LeadRow({ lead }: Props) {
                                 interesse: newValue,
                             });
                             setLocalInteresse(newValue);
+                            window.location.reload();
                         } catch (error) {
                             console.error("Erro ao atualizar interesse:", error);
                         }
@@ -87,14 +86,14 @@ export function LeadRow({ lead }: Props) {
                 <StatusButton
                     status={localStatus}
                     onClick={async () => {
-                        const newStatus = localStatus === "ativo" ? "concluido" : "ativo";
+                        const newValue = localStatus === "ativo" ? "concluido" : "ativo";
                         try{
                            await putLead({
                                id_leads_comercial: lead.id_leads_comercial,
-                               status: newStatus,
+                               status: newValue,
                            });
-                           setLocalStatus(newStatus);
-
+                           setLocalStatus(newValue);
+                            window.location.reload();
                     }catch(e){
                             console.log("Erro ao atualizar: ",e);
                         }
