@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback} from "react";
 import { LeadRow } from "@/components/LeadsRow/LeadRow";
 import { LeadCard } from "@/components/Cards/LeadCard";
 import { StatusFilter } from "@/components/Filters/StatusFilter";
@@ -46,10 +46,9 @@ export default function Home() {
         setPage(1);
     }, [statusFilter, typeFilter, originFilter,busca]);
 
-    useEffect(() => {
+    const fetchLeads = useCallback(() => {
         setLoading(true);
-
-        getLeads({
+        return getLeads({
             page,
             limit: ITEMS_FOR_PAGE,
             status: statusFilter === "ativos" ? "ativo" : "concluido",
@@ -60,7 +59,16 @@ export default function Home() {
             .then(setLeads)
             .catch((err) => console.error("Erro ao buscar leads:", err))
             .finally(() => setLoading(false));
-    }, [statusFilter, typeFilter, originFilter, page, busca]);
+    }, [page, statusFilter, typeFilter, originFilter, busca]);
+
+    useEffect(() => {
+        fetchLeads();
+    }, [fetchLeads]);
+
+    const handleUpdateLead = () => {
+        fetchLeads();
+    };
+
 
     return (
         <main className="p-10">
@@ -116,7 +124,7 @@ export default function Home() {
                             <p className="text-gray-500">Nenhuma lead encontrada.</p>
                         ) : (
                             leads.map((lead) => (
-                                <LeadRow key={lead.id_leads_comercial} lead={lead} />
+                                <LeadRow key={lead.id_leads_comercial} lead={lead} onUpdate={handleUpdateLead} />
                             ))
                         )}
                         <div>
