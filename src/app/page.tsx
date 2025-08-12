@@ -25,12 +25,12 @@ export default function Home() {
     const [busca, setBusca] = useState("");
 
 
-    useEffect(() => {
+    const fetchTotais = useCallback(() => {
         const statusParam = statusFilter === "ativos" ? "ativo" : "concluido";
         const interesseParam = typeFilter !== "todos" ? typeFilter : undefined;
         const fonteParam = originFilter !== "todos" ? originFilter : undefined;
 
-        getLeadsTotais({
+        return getLeadsTotais({
             page: 1,
             limit: ITEMS_FOR_PAGE,
             status: statusParam,
@@ -40,7 +40,11 @@ export default function Home() {
         })
             .then(setTotais)
             .catch((err) => console.error("Erro ao buscar totais:", err));
-    }, [statusFilter, typeFilter, originFilter,busca]);
+    }, [statusFilter, typeFilter, originFilter, busca]);
+
+    useEffect(() => {
+        fetchTotais();
+    }, [fetchTotais]);
 
     useEffect(() => {
         setPage(1);
@@ -67,6 +71,7 @@ export default function Home() {
 
     const handleUpdateLead = () => {
         fetchLeads();
+        fetchTotais();
     };
 
 
