@@ -7,6 +7,7 @@ import { putLead } from "@/lib/services/put-leads";
 import {TypeDropdown} from "@/components/LeadsRow/ItemsRow/TypeDropDown";
 import {ParceiroInput} from "@/components/LeadsRow/ItemsRow/ParceiroInput";
 import {StatusButton} from "@/components/LeadsRow/ItemsRow/StatusCheck";
+import {ContactAvatar} from "@/components/LeadsRow/ItemsRow/Contact/ContactAvatar";
 
 
 type Props = {
@@ -19,15 +20,11 @@ export function LeadRow({ lead, onUpdate }: Props) {
     const [localInteresse, setLocalInteresse] = useState<"revenda" | "utilizacao">(lead.interesse as "revenda" | "utilizacao");
 
 
-
     return (
         <div className="grid grid-cols-[1.5fr_1.1fr_1.3fr_1.2fr_1.2fr_1fr_1fr] items-center gap-4 px-8 py-3 border rounded-md bg-white text-sm">
             {/* Contato */}
             <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-orange-500/80 text-white font-semibold flex items-center justify-center rounded-full text-xs uppercase">
-                    {(lead.nome ?? "" +
-                        "-").slice(0, 2)}
-                </div>
+               <ContactAvatar name={lead.nome} />
                 <div>
                     {lead.nome?.trim() && (
                         <CopyableText text={lead.nome} className="text-muted-foreground" />
