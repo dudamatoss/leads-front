@@ -24,7 +24,7 @@ export function LeadRow({ lead, onUpdate }: Props) {
         <div className="grid grid-cols-[1.5fr_1.1fr_1.3fr_1.2fr_1.2fr_1fr_1fr] items-center gap-4 px-8 py-3 border rounded-md bg-white text-sm">
             {/* Contato */}
             <div className="flex items-center gap-3">
-               <ContactAvatar name={lead.nome} />
+               <ContactAvatar name={lead.nome} interesse={localInteresse} />
                 <div>
                     {lead.nome?.trim() && (
                         <CopyableText text={lead.nome} className="text-muted-foreground" />

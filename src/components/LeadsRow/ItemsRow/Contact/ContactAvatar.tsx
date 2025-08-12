@@ -1,12 +1,14 @@
 "use client";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
 
 interface ContactAvatarProps {
     name: string | null | undefined;
+    interesse: "revenda" | "utilizacao";
 }
 
-export function ContactAvatar({ name }: ContactAvatarProps) {
+export function ContactAvatar({ name, interesse }: ContactAvatarProps) {
     const initials = (() => {
         const n = (name ?? "").trim();
         if (!n) return "--";
@@ -17,7 +19,14 @@ export function ContactAvatar({ name }: ContactAvatarProps) {
 
     return (
         <Avatar className="h-9 w-9">
-            <AvatarFallback className="bg-orange-500/80 text-white font-semibold text-xs">
+            <AvatarFallback
+                className={cn(
+                    "text-white font-semibold text-xs",
+                    interesse === "revenda"
+                        ? "bg-orange-500/80"
+                        : "bg-purple-500/80"
+                )}
+            >
                 {initials}
             </AvatarFallback>
         </Avatar>
