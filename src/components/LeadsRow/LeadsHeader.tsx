@@ -1,12 +1,15 @@
 "use client";
 
-import {User2, Zap, Megaphone,List, Calendar,User, Handshake,MessageCircleQuestion} from "lucide-react";
-import {Input} from "@/components/ui/input";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
+import {User2, Zap, Megaphone, List, Calendar, Handshake, MessageCircleQuestion} from "lucide-react";
 
-export function LeadsHeader() {
+interface Props {
+    showParceiro?: boolean;
+}
+
+
+export function LeadsHeader({ showParceiro = true }: Props) {
     return (
-        <div className="w-full bg-muted rounded-md px-12 py-3 flex items-center justify-between text-sm font-medium text-muted-foreground">
+        <div className="w-full bg-muted rounded-md px-16 py-3 flex items-center justify-between text-sm font-medium text-muted-foreground">
         {/*Contato*/}
             <div className=" ml-3 flex items-center text-orange-500">
                 <User2 className="h-4 w-4" />
@@ -33,10 +36,12 @@ export function LeadsHeader() {
                 <span className="text-foreground text-gray-700">Data</span>
             </div>
             {/*Parceiro*/}
-            <div className=" flex items-center  text-orange-500">
-                <Handshake className="h-4 w-4" />
-                <span className="text-foreground text-gray-700">Parceiro</span>
-            </div>
+            {showParceiro && (
+                <div className=" flex items-center  text-orange-500">
+                    <Handshake className="h-4 w-4" />
+                    <span className="text-foreground text-gray-700">Parceiro</span>
+                </div>
+            )}
             {/*Status*/}
             <div className="mr-3 flex items-center  text-orange-500">
                 <MessageCircleQuestion className="h-4 w-4" />

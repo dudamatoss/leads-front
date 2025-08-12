@@ -74,7 +74,6 @@ export default function Home() {
         fetchTotais();
     };
 
-
     return (
         <main className="p-10">
             <div className="flex flex-col">
@@ -119,7 +118,7 @@ export default function Home() {
                     </div>
                     {/* Cabeçalho da tabela */}
                     <div className="p-6">
-                        <LeadsHeader />
+                        <LeadsHeader showParceiro={typeFilter !== "revenda"} />
                     </div>
                     {/* Lista de leads */}
                     <div className="flex flex-col gap-y-3 p-6 pt-1">
@@ -129,7 +128,7 @@ export default function Home() {
                             <p className="text-gray-500">Nenhuma lead encontrada.</p>
                         ) : (
                             leads.map((lead) => (
-                                <LeadRow key={lead.id_leads_comercial} lead={lead} onUpdate={handleUpdateLead} />
+                                <LeadRow key={lead.id_leads_comercial} lead={lead} onUpdate={handleUpdateLead} showParceiro={typeFilter !== "revenda"}/>
                             ))
                         )}
                         <div>

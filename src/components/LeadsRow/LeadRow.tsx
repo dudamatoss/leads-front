@@ -8,23 +8,34 @@ import {TypeDropdown} from "@/components/LeadsRow/ItemsRow/TypeDropDown";
 import {ParceiroInput} from "@/components/LeadsRow/ItemsRow/ParceiroInput";
 import {StatusButton} from "@/components/LeadsRow/ItemsRow/StatusCheck";
 import {ContactAvatar} from "@/components/LeadsRow/ItemsRow/Contact/ContactAvatar";
+import { Input } from "@/components/ui/input";
 
 
 type Props = {
     lead: LeadType;
     onUpdate?: () => void;
+    showParceiro?: boolean;
 };
 
-export function LeadRow({ lead, onUpdate }: Props) {
-    const [localStatus, setLocalStatus] = useState<"ativo" | "concluido">(lead.status as "ativo" | "concluido");
-    const [localInteresse, setLocalInteresse] = useState<"revenda" | "utilizacao">(lead.interesse as "revenda" | "utilizacao");
+export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
+    const [localStatus, setLocalStatus] = useState<"ativo" | "concluido">(
+        lead.status as "ativo" | "concluido"
+    );
+    const [localInteresse, setLocalInteresse] = useState<
+        "revenda" | "utilizacao"
+    >(lead.interesse as "revenda" | "utilizacao");
 
+    const gridTemplate = showParceiro
+        ? "grid-cols-[1.5fr_1.1fr_1.3fr_1.2fr_1.2fr_1fr_1fr]"
+        : "grid-cols-[1.5fr_1.5fr_1.3fr_1.2fr_1fr_1fr]";
 
     return (
-        <div className="grid grid-cols-[1.5fr_1.1fr_1.3fr_1.2fr_1.2fr_1fr_1fr] items-center gap-4 px-8 py-3 border rounded-md bg-white text-sm">
+        <div
+            className={`grid ${gridTemplate} items-center gap-4 px-8 py-3 border rounded-md bg-white text-sm`}
+        >
             {/* Contato */}
             <div className="flex items-center gap-3">
-               <ContactAvatar name={lead.nome} interesse={localInteresse} />
+                <ContactAvatar name={lead.nome} interesse={localInteresse} />
                 <div>
                     {lead.nome?.trim() && (
                         <CopyableText text={lead.nome} className="text-muted-foreground" />
@@ -72,20 +83,31 @@ export function LeadRow({ lead, onUpdate }: Props) {
             </span>
 
             {/* Parceiro */}
-            <ParceiroInput
-                initialValue={lead.parceiro ?? ""}
-                onConfirm={async (newValue) => {
-                    try {
-                        await putLead({
-                            id_leads_comercial: lead.id_leads_comercial,
-                            parceiro: newValue,
-                        });
-                        onUpdate?.();
-                    } catch (error) {
-                        console.error("Erro ao atualizar parceiro:", error);
-                    }
-                }}
-            />
+            {showParceiro && (
+                localInteresse === "revenda" ? (
+                    <Input
+                        value=""
+                        placeholder="Não se aplica"
+                        readOnly
+                        className="h-7 w-[140px] text-sm  bg-gray-50 text-gray-400 italic outline-dashed outline outline-offset-0"
+                    />
+                ) : (
+                    <ParceiroInput
+                        initialValue={lead.parceiro ?? ""}
+                        onConfirm={async (newValue) => {
+                            try {
+                                await putLead({
+                                    id_leads_comercial: lead.id_leads_comercial,
+                                    parceiro: newValue,
+                                });
+                                onUpdate?.();
+                            } catch (error) {
+                                console.error("Erro ao atualizar parceiro:", error);
+                            }
+                        }}
+                    />
+                )
+            )}
 
             {/* Status */}
             <div className="justify-self-end">

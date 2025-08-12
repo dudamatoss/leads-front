@@ -51,8 +51,6 @@ export function ParceiroInput({initialValue, onConfirm, placeholder = "Digite...
                     !isPut ? "bg-gray-100 cursor-not-allowed" : ""
                 }`}
             />
-
-
             {!isPut && (
                 <button
                     type="button"
