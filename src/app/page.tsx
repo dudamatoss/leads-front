@@ -23,6 +23,12 @@ export default function Home() {
     const [totais, setTotais] = useState<LeadsTotais | null>(null);
     const [page, setPage] = useState(1);
     const [busca, setBusca] = useState("");
+    const [debouncedBusca, setDebouncedBusca] = useState("");
+
+    useEffect(() => {
+        const handler = setTimeout(() => (setDebouncedBusca(busca) ), 200);
+        return () => clearTimeout(handler);
+    }, [busca]);
 
 
     const fetchTotais = useCallback(() => {
@@ -36,11 +42,11 @@ export default function Home() {
             status: statusParam,
             interesse: interesseParam,
             fonte: fonteParam,
-            busca,
+            busca: debouncedBusca,
         })
             .then(setTotais)
             .catch((err) => console.error("Erro ao buscar totais:", err));
-    }, [statusFilter, typeFilter, originFilter, busca]);
+    }, [statusFilter, typeFilter, originFilter, debouncedBusca]);
 
     useEffect(() => {
         fetchTotais();
@@ -48,7 +54,7 @@ export default function Home() {
 
     useEffect(() => {
         setPage(1);
-    }, [statusFilter, typeFilter, originFilter,busca]);
+    }, [statusFilter, typeFilter, originFilter,debouncedBusca]);
 
     const fetchLeads = useCallback(() => {
         setLoading(true);
@@ -58,12 +64,12 @@ export default function Home() {
             status: statusFilter === "ativos" ? "ativo" : "concluido",
             interesse: typeFilter !== "todos" ? typeFilter : undefined,
             fonte: originFilter !== "todos" ? originFilter : undefined,
-            busca,
+            busca: debouncedBusca,
         })
             .then(setLeads)
             .catch((err) => console.error("Erro ao buscar leads:", err))
             .finally(() => setLoading(false));
-    }, [page, statusFilter, typeFilter, originFilter, busca]);
+    }, [page, statusFilter, typeFilter, originFilter, debouncedBusca]);
 
     useEffect(() => {
         fetchLeads();
