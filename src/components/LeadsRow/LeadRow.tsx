@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { LeadType } from "@/schemas/leads-schemas";
 import { CopyableText } from "@/components/Copy/CopyText";
-import { putLead } from "@/lib/services/put-leads";
-import {TypeDropdown} from "@/components/LeadsRow/ItemsRow/TypeDropDown";
-import {ParceiroInput} from "@/components/LeadsRow/ItemsRow/ParceiroInput";
-import {StatusButton} from "@/components/LeadsRow/ItemsRow/StatusCheck";
-import {ContactAvatar} from "@/components/LeadsRow/ItemsRow/Contact/ContactAvatar";
+import { usePutLead } from "@/hooks/use-put-leads";
+import { TypeDropdown } from "@/components/LeadsRow/ItemsRow/TypeDropDown";
+import { ParceiroInput } from "@/components/LeadsRow/ItemsRow/ParceiroInput";
+import { StatusButton } from "@/components/LeadsRow/ItemsRow/StatusCheck";
+import { ContactAvatar } from "@/components/LeadsRow/ItemsRow/Contact/ContactAvatar";
 import { Input } from "@/components/ui/input";
 
 
@@ -24,6 +24,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
     const [localInteresse, setLocalInteresse] = useState<
         "revenda" | "utilizacao"
     >(lead.interesse as "revenda" | "utilizacao");
+    const { updateLead } = usePutLead();
 
     const gridTemplate = showParceiro
         ? "grid-cols-[1.5fr_1.1fr_1.3fr_1.2fr_1.2fr_1fr_1fr]"
@@ -61,7 +62,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
                     value={localInteresse}
                     onChange={async (newValue) => {
                         try {
-                            await putLead({
+                            await updateLead({
                                 id_leads_comercial: lead.id_leads_comercial,
                                 interesse: newValue,
                             });
@@ -96,7 +97,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
                         initialValue={lead.parceiro ?? ""}
                         onConfirm={async (newValue) => {
                             try {
-                                await putLead({
+                                await updateLead({
                                     id_leads_comercial: lead.id_leads_comercial,
                                     parceiro: newValue,
                                 });
@@ -117,7 +118,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
                         const newStatus =
                             localStatus === "ativo" ? "concluido" : "ativo";
                         try {
-                            await putLead({
+                            await updateLead({
                                 id_leads_comercial: lead.id_leads_comercial,
                                 status: newStatus,
                             });

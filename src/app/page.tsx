@@ -1,25 +1,25 @@
 "use client";
 
-import { useEffect, useState, useCallback} from "react";
+import {useEffect, useState, useCallback} from "react";
 import { LeadRow } from "@/components/LeadsRow/LeadRow";
 import { LeadCard } from "@/components/Cards/LeadCard";
 import { StatusFilter } from "@/components/Filters/StatusFilter";
 import { SearchFilter } from "@/components/Filters/SeaechFilter";
-import {OriginFilter, TypesFilter} from "@/components/Filters/DropDownFilter";
+import { OriginFilter, TypesFilter } from "@/components/Filters/DropDownFilter";
 import { LeadsHeader } from "@/components/LeadsRow/LeadsHeader";
-import {getLeads, getLeadsTotais} from "@/lib/services/get-leads";
-import {LeadsTotais, LeadType} from "@/schemas/leads-schemas";
-import {Handshake, UserCheck, Users2} from "lucide-react";
-import {PaginationControls} from "@/components/Pagination/Pagination";
-import {NoLeadsFound} from "@/components/LeadsRow/NoticeLeads/NoLeadsFound";
-import {LeadsError} from "@/components/LeadsRow/NoticeLeads/LeadsError";
-import {LeadsLoading} from "@/components/LeadsRow/LeadsLoading";
+import { getLeadsTotais } from "@/lib/services/get-leads";
+import { LeadsTotais } from "@/schemas/leads-schemas";
+import { Handshake, UserCheck, Users2 } from "lucide-react";
+import { PaginationControls } from "@/components/Pagination/Pagination";
+import { NoLeadsFound } from "@/components/LeadsRow/NoticeLeads/NoLeadsFound";
+import { LeadsError } from "@/components/LeadsRow/NoticeLeads/LeadsError";
+import { LeadsLoading } from "@/components/LeadsRow/LeadsLoading";
+import { useLeadsPolling } from "@/hooks/use-leads";
+
 
 const ITEMS_FOR_PAGE = 8;
 
 export default function Home() {
-    const [leads, setLeads] = useState<LeadType[]>([]);
-    const [loading, setLoading] = useState(true);
     const [statusFilter, setStatusFilter] = useState<"ativos" | "concluidos">("ativos");
     const [typeFilter, setTypeFilter] = useState<"revenda" | "utilizacao" | "todos">("revenda");
     const [originFilter, setOriginFilter] = useState<"Instagram"| "Facebook" | "Google" | "todos">("todos");
@@ -27,8 +27,16 @@ export default function Home() {
     const [page, setPage] = useState(1);
     const [busca, setBusca] = useState("");
     const [delayBusca, setDelayBusca] = useState("");
-    const [leadsError, setLeadsError] = useState(false);
     const [totaisError, setTotaisError] = useState(false);
+
+    const { leads, loading, error: leadsError, refetch } = useLeadsPolling({
+        page,
+        limit: ITEMS_FOR_PAGE,
+        status: statusFilter === "ativos" ? "ativo" : "concluido",
+        interesse: typeFilter !== "todos" ? typeFilter : undefined,
+        fonte: originFilter !== "todos" ? originFilter : undefined,
+        busca: delayBusca,
+    });
     const error = leadsError || totaisError;
 
     useEffect(() => {
@@ -61,38 +69,17 @@ export default function Home() {
 
     useEffect(() => {
         fetchTotais();
+        const id = setInterval(fetchTotais, 5000);
+        return () => clearInterval(id);
     }, [fetchTotais]);
 
     useEffect(() => {
         setPage(1);
     }, [statusFilter, typeFilter, originFilter,delayBusca]);
 
-    const fetchLeads = useCallback(() => {
-        setLoading(true);
-        setLeadsError(false);
-        return getLeads({
-            page,
-            limit: ITEMS_FOR_PAGE,
-            status: statusFilter === "ativos" ? "ativo" : "concluido",
-            interesse: typeFilter !== "todos" ? typeFilter : undefined,
-            fonte: originFilter !== "todos" ? originFilter : undefined,
-            busca: delayBusca,
-        })
-            .then(setLeads)
-            .catch((err) => {
-                console.error("Erro ao buscar leads:", err);
-                setLeadsError(true);
-                setLeads([]);
-            })
-            .finally(() => setLoading(false));
-    }, [page, statusFilter, typeFilter, originFilter, delayBusca]);
-
-    useEffect(() => {
-        fetchLeads();
-    }, [fetchLeads]);
 
     const handleUpdateLead = () => {
-        fetchLeads();
+        refetch();
         fetchTotais();
     };
 
