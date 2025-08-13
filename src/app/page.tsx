@@ -82,7 +82,7 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap justify-between">
                 <LeadCard
-                    title="Leads Ativos"
+                    title={statusFilter === "ativos" ? "Leads Ativos" : "Leads Concluídos"}
                     value={totais?.totalStatus ?? 0}
                     icon={Users2}
                 />
