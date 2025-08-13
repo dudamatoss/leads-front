@@ -107,7 +107,6 @@ export default function Home() {
                     icon={Handshake}
                 />
 
-
                 <div className="w-full mt-10 mx-auto rounded-xl border shadow-sm bg-white sm:col-span-2 lg:col-span-3">
                     {/* Filtro de status */}
                     <div className="p-6">
