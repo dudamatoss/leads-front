@@ -16,7 +16,6 @@ import { LeadsError } from "@/components/LeadsRow/NoticeLeads/LeadsError";
 import { LeadsLoading } from "@/components/LeadsRow/LeadsLoading";
 import { useLeadsPolling } from "@/hooks/use-leads";
 
-
 const ITEMS_FOR_PAGE = 8;
 
 export default function Home() {
@@ -29,7 +28,7 @@ export default function Home() {
     const [delayBusca, setDelayBusca] = useState("");
     const [totaisError, setTotaisError] = useState(false);
 
-    const { leads, loading, error: leadsError, refetch } = useLeadsPolling({
+    const { leads, loading, error: leadsError, refetch, totalPages  } = useLeadsPolling({
         page,
         limit: ITEMS_FOR_PAGE,
         status: statusFilter === "ativos" ? "ativo" : "concluido",
@@ -150,7 +149,7 @@ export default function Home() {
                         <div>
                             <PaginationControls
                             page={page}
-                            totalPages={Math.max(1, totais?.totalPaginas ?? 0)}
+                            totalPages={totalPages}
                             onPageChange={setPage}
                             className="px-6 pb-6"
                         />
