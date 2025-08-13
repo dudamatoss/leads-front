@@ -10,7 +10,7 @@ interface LeadCardProps {
 
 export function LeadCard({ title, value, icon: Icon }: LeadCardProps) {
     return (
-        <Card className="w-full max-w-md shadow-sm rounded-xl">
+        <Card className="w-full shadow-sm rounded-xl">
             <CardContent className="p-6 flex flex-row justify-between items-center">
                 {/* Texto à esquerda */}
                 <div>

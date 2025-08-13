@@ -83,12 +83,12 @@ export default function Home() {
     };
 
     return (
-        <main className="p-10">
+        <main className="p-4 md:p-10">
             <div className="flex flex-col">
                 <h1 className="mb-2 text-4xl font-bold">Leads</h1>
                 <h3 className="text-gray-500 text-lg mb-3">Gerencie e vizualize todas as leads</h3>
             </div>
-            <div className="flex flex-wrap justify-between">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <LeadCard
                     title={statusFilter === "ativos" ? "Leads Ativos" : "Leads Concluídos"}
                     value={totais?.totalStatus ?? 0}
@@ -107,8 +107,8 @@ export default function Home() {
                     icon={Handshake}
                 />
 
-                {/* Container branco com informações */}
-                <div className="w-full mt-10 mx-auto rounded-xl border shadow-sm bg-white">
+
+                <div className="w-full mt-10 mx-auto rounded-xl border shadow-sm bg-white sm:col-span-2 lg:col-span-3">
                     {/* Filtro de status */}
                     <div className="p-6">
                         <StatusFilter value={statusFilter} onChange={setStatusFilter} />
