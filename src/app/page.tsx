@@ -11,6 +11,9 @@ import {getLeads, getLeadsTotais} from "@/lib/services/get-leads";
 import {LeadsTotais, LeadType} from "@/schemas/leads-schemas";
 import {Handshake, UserCheck, Users2} from "lucide-react";
 import {PaginationControls} from "@/components/Pagination/Pagination";
+import {NoLeadsFound} from "@/components/LeadsRow/NoticeLeads/NoLeadsFound";
+import {LeadsError} from "@/components/LeadsRow/NoticeLeads/LeadsError";
+import {LeadsLoading} from "@/components/LeadsRow/LeadsLoading";
 
 const ITEMS_FOR_PAGE = 8;
 
@@ -23,15 +26,19 @@ export default function Home() {
     const [totais, setTotais] = useState<LeadsTotais | null>(null);
     const [page, setPage] = useState(1);
     const [busca, setBusca] = useState("");
-    const [debouncedBusca, setDebouncedBusca] = useState("");
+    const [delayBusca, setDelayBusca] = useState("");
+    const [leadsError, setLeadsError] = useState(false);
+    const [totaisError, setTotaisError] = useState(false);
+    const error = leadsError || totaisError;
 
     useEffect(() => {
-        const handler = setTimeout(() => (setDebouncedBusca(busca) ), 200);
+        const handler = setTimeout(() => (setDelayBusca(busca) ), 200);
         return () => clearTimeout(handler);
     }, [busca]);
 
 
     const fetchTotais = useCallback(() => {
+        setTotaisError(false);
         const statusParam = statusFilter === "ativos" ? "ativo" : "concluido";
         const interesseParam = typeFilter !== "todos" ? typeFilter : undefined;
         const fonteParam = originFilter !== "todos" ? originFilter : undefined;
@@ -42,11 +49,15 @@ export default function Home() {
             status: statusParam,
             interesse: interesseParam,
             fonte: fonteParam,
-            busca: debouncedBusca,
+            busca: delayBusca,
         })
             .then(setTotais)
-            .catch((err) => console.error("Erro ao buscar totais:", err));
-    }, [statusFilter, typeFilter, originFilter, debouncedBusca]);
+            .catch((err) => {
+                console.error("Erro ao buscar totais:", err);
+                setTotaisError(true);
+                setTotais(null);
+            });
+    }, [statusFilter, typeFilter, originFilter, delayBusca]);
 
     useEffect(() => {
         fetchTotais();
@@ -54,22 +65,27 @@ export default function Home() {
 
     useEffect(() => {
         setPage(1);
-    }, [statusFilter, typeFilter, originFilter,debouncedBusca]);
+    }, [statusFilter, typeFilter, originFilter,delayBusca]);
 
     const fetchLeads = useCallback(() => {
         setLoading(true);
+        setLeadsError(false);
         return getLeads({
             page,
             limit: ITEMS_FOR_PAGE,
             status: statusFilter === "ativos" ? "ativo" : "concluido",
             interesse: typeFilter !== "todos" ? typeFilter : undefined,
             fonte: originFilter !== "todos" ? originFilter : undefined,
-            busca: debouncedBusca,
+            busca: delayBusca,
         })
             .then(setLeads)
-            .catch((err) => console.error("Erro ao buscar leads:", err))
+            .catch((err) => {
+                console.error("Erro ao buscar leads:", err);
+                setLeadsError(true);
+                setLeads([]);
+            })
             .finally(() => setLoading(false));
-    }, [page, statusFilter, typeFilter, originFilter, debouncedBusca]);
+    }, [page, statusFilter, typeFilter, originFilter, delayBusca]);
 
     useEffect(() => {
         fetchLeads();
@@ -129,12 +145,19 @@ export default function Home() {
                     {/* Lista de leads */}
                     <div className="flex flex-col gap-y-3 p-6 pt-1">
                         {loading ? (
-                            <p>Carregando...</p>
+                            <LeadsLoading />
+                        ) : error ? (
+                            <LeadsError />
                         ) : leads.length === 0 ? (
-                            <p className="text-gray-500">Nenhuma lead encontrada.</p>
+                            <NoLeadsFound />
                         ) : (
                             leads.map((lead) => (
-                                <LeadRow key={lead.id_leads_comercial} lead={lead} onUpdate={handleUpdateLead} showParceiro={typeFilter !== "revenda"}/>
+                                <LeadRow
+                                    key={lead.id_leads_comercial}
+                                    lead={lead}
+                                    onUpdate={handleUpdateLead}
+                                    showParceiro={typeFilter !== "revenda"}
+                                />
                             ))
                         )}
                         <div>

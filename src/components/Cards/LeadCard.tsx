@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
+import {AnimationCards} from "@/components/Cards/AnimationCards";
 
 interface LeadCardProps {
     title: string;
@@ -14,7 +15,9 @@ export function LeadCard({ title, value, icon: Icon }: LeadCardProps) {
                 {/* Texto à esquerda */}
                 <div>
                     <p className="text-lg text-muted-foreground font-medium">{title}</p>
-                    <h2 className="text-4xl font-bold text-foreground mt-2">{value}</h2>
+                    <h2 className="text-4xl font-bold text-foreground mt-2">
+                        <AnimationCards value={value}/>
+                    </h2>
                 </div>
 
                 {/* Ícone à direita - cor fixa: laranja */}
