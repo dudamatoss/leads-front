@@ -32,7 +32,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
 
     return (
         <div
-            className={`grid ${gridTemplate} items-center gap-4 px-8 py-3 border rounded-md bg-white text-sm`}
+            className={`grid ${gridTemplate} items-center gap-4 px-6 py-3 border rounded-md bg-white text-sm`}
         >
             {/* Contato */}
             <div className="flex items-center gap-3">
