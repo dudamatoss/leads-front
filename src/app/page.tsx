@@ -68,7 +68,7 @@ export default function Home() {
 
     useEffect(() => {
         fetchTotais();
-        const id = setInterval(fetchTotais, 5000);
+        const id = setInterval(fetchTotais, 10000);
         return () => clearInterval(id);
     }, [fetchTotais]);
 

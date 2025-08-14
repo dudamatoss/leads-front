@@ -27,7 +27,8 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
         : "grid-cols-[1.5fr_1.5fr_1.3fr_1.2fr_1fr_1fr]";
 
     return (
-        <div className={`grid ${gridTemplate} items-center gap-4 px-6 py-3 border rounded-md bg-white text-sm`}>
+        <div
+            className={`grid ${gridTemplate} items-center gap-4 px-6 py-3 border rounded-md bg-white text-sm animate-in fade-in slide-in-from-bottom-1 duration-300`}>
             {/* Contato */}
             <div className="flex items-center gap-3">
                 <ContactAvatar name={lead.nome} interesse={localInteresse} />
