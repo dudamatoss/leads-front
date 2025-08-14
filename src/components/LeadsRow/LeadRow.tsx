@@ -10,7 +10,6 @@ import { StatusButton } from "@/components/LeadsRow/ItemsRow/StatusCheck";
 import { ContactAvatar } from "@/components/LeadsRow/ItemsRow/Contact/ContactAvatar";
 import { Input } from "@/components/ui/input";
 
-
 type Props = {
     lead: LeadType;
     onUpdate?: () => void;
@@ -18,22 +17,17 @@ type Props = {
 };
 
 export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
-    const [localStatus, setLocalStatus] = useState<"ativo" | "concluido">(
-        lead.status as "ativo" | "concluido"
-    );
-    const [localInteresse, setLocalInteresse] = useState<
-        "revenda" | "utilizacao"
-    >(lead.interesse as "revenda" | "utilizacao");
+    const [localStatus, setLocalStatus] = useState<"ativo" | "concluido">(lead.status as "ativo" | "concluido");
+    const [localInteresse, setLocalInteresse] = useState<"revenda" | "utilizacao">(lead.interesse as "revenda" | "utilizacao");
     const { updateLead } = usePutLead();
 
+    const date = new Date(lead.data_hora);
     const gridTemplate = showParceiro
         ? "grid-cols-[1.5fr_1.1fr_1.3fr_1.2fr_1.2fr_1fr_1fr]"
         : "grid-cols-[1.5fr_1.5fr_1.3fr_1.2fr_1fr_1fr]";
 
     return (
-        <div
-            className={`grid ${gridTemplate} items-center gap-4 px-6 py-3 border rounded-md bg-white text-sm`}
-        >
+        <div className={`grid ${gridTemplate} items-center gap-4 px-6 py-3 border rounded-md bg-white text-sm`}>
             {/* Contato */}
             <div className="flex items-center gap-3">
                 <ContactAvatar name={lead.nome} interesse={localInteresse} />
@@ -51,7 +45,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
             </div>
 
             {/* Origem */}
-            <span className="text-gray-600 font-medium p-5">{lead.fonte?.trim() ? (lead.fonte) : (<span className="text-gray-400 font-normal italic">Não informado</span>) }</span>
+            <span className="text-gray-600 font-medium p-5">{lead.fonte?.trim() ? (lead.fonte) : (<span className="text-gray-400 font-normal italic">Não informado</span>)}</span>
 
             {/* Anúncio */}
             <span className="text-orange-400 font-normal">{lead.anuncio?.trim() ? (lead.anuncio) : (<span className="text-gray-400 font-normal italic">Não informado</span>)}</span>
@@ -77,7 +71,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
 
             {/* Data */}
             <span className="text-gray-600 font-medium whitespace-nowrap">
-                {`${new Date(lead.data_hora).toLocaleDateString("pt-BR")} ${new Date(lead.data_hora).toLocaleTimeString("pt-BR", {
+                 {`${date.toLocaleDateString("pt-BR")} ${date.toLocaleTimeString("pt-BR", {
                     hour: "2-digit",
                     minute: "2-digit",
                 })}`}
@@ -90,8 +84,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
                         value=""
                         placeholder="Não se aplica"
                         readOnly
-                        className="h-7 w-[140px] text-sm  bg-gray-50 text-gray-400 italic outline-dashed outline outline-offset-0"
-                    />
+                        className="h-7 w-[140px] text-sm  bg-gray-50 text-gray-400 italic outline-dashed outline outline-offset-0"/>
                 ) : (
                     <ParceiroInput
                         initialValue={lead.parceiro ?? ""}
