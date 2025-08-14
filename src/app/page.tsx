@@ -14,7 +14,7 @@ import {PaginationControls} from "@/components/Pagination/Pagination";
 import {NoLeadsFound} from "@/components/LeadsRow/NoticeLeads/NoLeadsFound";
 import {LeadsError} from "@/components/LeadsRow/NoticeLeads/LeadsError";
 import {LeadsLoading} from "@/components/LeadsRow/LeadsLoading";
-import {useLeadsPolling} from "@/hooks/use-leads";
+import {useLeadsPolling} from "@/hooks/useLeads";
 import {AnimationCards} from "@/components/Cards/AnimationCards";
 
 const ITEMS_FOR_PAGE = 8;
@@ -70,7 +70,7 @@ export default function Home() {
     useEffect(() => {
         if (leadsError || totaisError) return;
         fetchTotais();
-        const id = setInterval(fetchTotais, 3000);
+        const id = setInterval(fetchTotais, 10000);
         return () => clearInterval(id);
     }, [fetchTotais, leadsError, totaisError]);
 

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { LeadType } from "@/schemas/leads-schemas";
 import { CopyableText } from "@/components/Copy/CopyText";
-import { usePutLead } from "@/hooks/use-put-leads";
+import { usePutLead } from "@/hooks/usePutLeads";
 import { TypeDropdown } from "@/components/LeadsRow/ItemsRow/TypeDropDown";
 import { ParceiroInput } from "@/components/LeadsRow/ItemsRow/ParceiroInput";
 import { StatusButton } from "@/components/LeadsRow/ItemsRow/StatusCheck";
