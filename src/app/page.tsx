@@ -15,6 +15,7 @@ import { NoLeadsFound } from "@/components/LeadsRow/NoticeLeads/NoLeadsFound";
 import { LeadsError } from "@/components/LeadsRow/NoticeLeads/LeadsError";
 import { LeadsLoading } from "@/components/LeadsRow/LeadsLoading";
 import { useLeadsPolling } from "@/hooks/use-leads";
+import {AnimationCards} from "@/components/Cards/AnimationCards";
 
 const ITEMS_FOR_PAGE = 8;
 
@@ -120,7 +121,9 @@ export default function Home() {
                     </div>
                     {/* Título e subtítulo */}
                     <div className="pl-6 pt-6 pb-6">
-                        <h2 className="pb-1 text-2xl font-bold">{totais?.totalGeral ?? leads.length} Leads</h2>
+                        <h2 className="pb-1 text-2xl font-bold">
+                            <AnimationCards value={totais?.totalGeral ?? leads.length} /> Leads
+                        </h2>
                         <h3 className="text-gray-500 text-l">Todas as leads registradas</h3>
                     </div>
                     {/* Cabeçalho da tabela */}
