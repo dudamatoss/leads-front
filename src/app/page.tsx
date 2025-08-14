@@ -68,10 +68,11 @@ export default function Home() {
     }, [statusFilter, typeFilter, originFilter, delayBusca]);
 
     useEffect(() => {
+        if(leadsError || totaisError) return ;
         fetchTotais();
-        const id = setInterval(fetchTotais, 10000);
+        const id = setInterval(fetchTotais, 3000);
         return () => clearInterval(id);
-    }, [fetchTotais]);
+    }, [fetchTotais, leadsError, totaisError]);
 
     useEffect(() => {
         setPage(1);
