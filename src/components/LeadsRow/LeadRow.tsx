@@ -32,17 +32,17 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
         <div
             className={`grid ${gridTemplate} items-center gap-4 px-6 py-3 border rounded-md bg-white text-sm animate-in fade-in slide-in-from-bottom-1 duration-300`}>
             {/* Contato */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 min-w-0">
                 <ContactAvatar name={lead.nome} interesse={localInteresse} />
-                <div>
+                <div className="min-w-0">
                     {lead.nome?.trim() && (
-                        <CopyableText text={lead.nome} className="text-muted-foreground" />
+                        <CopyableText text={lead.nome} className="text-muted-foreground max-w-[150px]"/>
                     )}
                     {lead.email?.trim() && (
-                        <CopyableText text={lead.email} className="text-muted-foreground" />
+                        <CopyableText text={lead.email} className="text-muted-foreground max-w-[200px]"/>
                     )}
                     {lead.cnpj?.trim() && (
-                        <CopyableText text={lead.cnpj} className="text-muted-foreground" />
+                        <CopyableText text={lead.cnpj} className="text-muted-foreground max-w-[150px]"/>
                     )}
                 </div>
             </div>
