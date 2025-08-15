@@ -16,6 +16,7 @@ import {LeadsError} from "@/components/LeadsRow/NoticeLeads/LeadsError";
 import {LeadsLoading} from "@/components/LeadsRow/LeadsLoading";
 import {useLeadsPolling} from "@/hooks/useLeads";
 import {AnimationCards} from "@/components/Cards/AnimationCards";
+import {Skeleton} from "@/components/ui/skeleton";
 
 const ITEMS_FOR_PAGE = 8;
 
@@ -83,6 +84,7 @@ export default function Home() {
         refetch();
         fetchTotais();
     };
+    const isTotaisLoading = totais === null && !totaisError;
 
     return (
         <main className="p-4 md:p-10">
@@ -95,18 +97,21 @@ export default function Home() {
                     title={statusFilter === "ativos" ? "Leads Ativos" : "Leads Concluídos"}
                     value={totais?.totalStatus ?? 0}
                     icon={Users2}
+                    loading={isTotaisLoading}
                 />
 
                 <LeadCard
                     title="Leads Revenda"
                     value={totais?.totalRevenda ?? 0}
                     icon={UserCheck}
+                    loading={isTotaisLoading}
                 />
 
                 <LeadCard
                     title="Leads Utilização"
                     value={totais?.totalUtilizacao ?? 0}
                     icon={Handshake}
+                    loading={isTotaisLoading}
                 />
 
                 <div className="w-full mt-10 mx-auto rounded-xl border shadow-sm bg-white sm:col-span-2 lg:col-span-3">
@@ -123,7 +128,9 @@ export default function Home() {
                     {/* Título e subtítulo */}
                     <div className="pl-6 pt-6 pb-6">
                         <h2 className="pb-1 text-2xl font-bold">
-                            <AnimationCards value={totais?.totalGeral ?? leads.length}/> Leads
+                            {isTotaisLoading ? (
+                                <Skeleton className="h-8 w-40" />
+                            ) : (<>{totais?.totalGeral ?? leads.length} Leads</>)}
                         </h2>
                         <h3 className="text-gray-500 text-l">Todas as leads registradas</h3>
                     </div>
