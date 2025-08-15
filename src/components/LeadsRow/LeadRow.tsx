@@ -10,6 +10,7 @@ import { StatusButton } from "@/components/LeadsRow/ItemsRow/StatusCheck";
 import { ContactAvatar } from "@/components/LeadsRow/ItemsRow/Contact/ContactAvatar";
 import { Input } from "@/components/ui/input";
 import {useUndo} from "@/components/Undo/Undo";
+import { formatCnpj} from "@/lib/format-cnpj";
 
 type Props = {
     lead: LeadType;
@@ -36,13 +37,13 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
                 <ContactAvatar name={lead.nome} interesse={localInteresse} />
                 <div className="min-w-0">
                     {lead.nome?.trim() && (
-                        <CopyableText text={lead.nome} className="text-muted-foreground max-w-[150px]"/>
+                        <CopyableText text={lead.nome} className="text-muted-foreground max-w-[180px]"/>
                     )}
                     {lead.email?.trim() && (
                         <CopyableText text={lead.email} className="text-muted-foreground max-w-[200px]"/>
                     )}
                     {lead.cnpj?.trim() && (
-                        <CopyableText text={lead.cnpj} className="text-muted-foreground max-w-[150px]"/>
+                        <CopyableText text={formatCnpj(lead.cnpj)} className="text-muted-foreground max-w-[150px]"/>
                     )}
                 </div>
             </div>
