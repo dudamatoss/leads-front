@@ -9,6 +9,7 @@ import { ParceiroInput } from "@/components/LeadsRow/ItemsRow/ParceiroInput";
 import { StatusButton } from "@/components/LeadsRow/ItemsRow/StatusCheck";
 import { ContactAvatar } from "@/components/LeadsRow/ItemsRow/Contact/ContactAvatar";
 import { Input } from "@/components/ui/input";
+import {useUndo} from "@/components/Undo/Undo";
 
 type Props = {
     lead: LeadType;
@@ -20,6 +21,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
     const [localStatus, setLocalStatus] = useState<"ativo" | "concluido">(lead.status as "ativo" | "concluido");
     const [localInteresse, setLocalInteresse] = useState<"revenda" | "utilizacao">(lead.interesse as "revenda" | "utilizacao");
     const { updateLead } = usePutLead();
+    const  showUndo  = useUndo();
 
     const date = new Date(lead.data_hora);
     const gridTemplate = showParceiro
@@ -56,6 +58,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
                 <TypeDropdown
                     value={localInteresse}
                     onChange={async (newValue) => {
+
                         try {
                             await updateLead({
                                 id_leads_comercial: lead.id_leads_comercial,
@@ -63,6 +66,14 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
                             });
                             setLocalInteresse(newValue);
                             onUpdate?.();
+                            showUndo(async () => {
+                                await updateLead({
+                                    id_leads_comercial: lead.id_leads_comercial,
+                                    interesse: localInteresse,
+                                });
+                                setLocalInteresse(localInteresse);
+                                onUpdate?.();
+                            });
                         } catch (error) {
                             console.error("Erro ao atualizar interesse:", error);
                         }
@@ -96,6 +107,13 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
                                     parceiro: newValue,
                                 });
                                 onUpdate?.();
+                                showUndo(async () => {
+                                    await updateLead({
+                                        id_leads_comercial: lead.id_leads_comercial,
+                                        parceiro: lead.parceiro ?? "",
+                                    });
+                                    onUpdate?.();
+                                })
                             } catch (error) {
                                 console.error("Erro ao atualizar parceiro:", error);
                             }
@@ -118,6 +136,14 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
                             });
                             setLocalStatus(newStatus);
                             onUpdate?.();
+                            showUndo(async () => {
+                                await updateLead({
+                                    id_leads_comercial: lead.id_leads_comercial,
+                                    status: localStatus,
+                                });
+                                setLocalStatus(localStatus);
+                                onUpdate?.();
+                            })
                         } catch (e) {
                             console.log("Erro ao atualizar: ", e);
                         }

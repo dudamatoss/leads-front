@@ -20,7 +20,7 @@ export function LeadCard({ title, value, icon: Icon }: LeadCardProps) {
                     </h2>
                 </div>
 
-                {/* Ícone à direita - cor fixa: laranja */}
+                {/* Ícone à direita */}
                 <div className="p-2 rounded-md bg-orange-100 text-orange-500">
                     <Icon className="w-6 h-6" />
                 </div>
