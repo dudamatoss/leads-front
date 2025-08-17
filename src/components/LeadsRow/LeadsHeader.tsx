@@ -18,39 +18,39 @@ export function LeadsHeader({ showParceiro = true }: Props) {
             {/*Contato*/}
             <div className="flex items-center gap-2 text-orange-500">
                 <User2 className="h-4 w-4" />
-                <span className="text-foreground text-gray-700">Contato</span>
+                <span className="text-foreground ">Contato</span>
             </div>
             {/*Origem*/}
             <div className="flex items-center gap-2 text-orange-500">
                 <Zap className="h-4 w-4" />
-                <span className="text-foreground text-gray-700">Origem</span>
+                <span className="text-foreground ">Origem</span>
             </div>
             {/*Anuncio*/}
             <div className="flex items-center gap-2 text-orange-500">
                 <Megaphone className="h-4 w-4" />
-                <span className="text-foreground text-gray-700">Anuncio</span>
+                <span className="text-foreground ">Anuncio</span>
             </div>
             {/*Tipo*/}
             <div className="flex items-center gap-2 text-orange-500">
                 <List className="h-4 w-4" />
-                <span className="text-foreground text-gray-700">Tipo</span>
+                <span className="text-foreground ">Tipo</span>
             </div>
             {/*Data*/}
             <div className="flex items-center gap-2 text-orange-500">
                 <Calendar className="h-4 w-4" />
-                <span className="text-foreground text-gray-700">Data</span>
+                <span className="text-foreground ">Data</span>
             </div>
             {/*Parceiro*/}
             {showParceiro && (
                 <div className="flex items-center gap-2 text-orange-500">
                     <Handshake className="h-4 w-4" />
-                    <span className="text-foreground text-gray-700">Parceiro</span>
+                    <span className="text-foreground ">Parceiro</span>
                 </div>
             )}
             {/*Status*/}
             <div className="flex items-center gap-2 text-orange-500 justify-self-end">
                 <MessageCircleQuestion className="h-4 w-4" />
-                <span className="text-foreground text-gray-700">Status</span>
+                <span className="text-foreground ">Status</span>
             </div>
         </div>
     );

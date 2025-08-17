@@ -9,8 +9,7 @@ interface OriginFilterProps {
 export function OriginFilter({value, onChange}: OriginFilterProps) {
     return(
         <Select value={value} onValueChange={(value) => onChange(value as "Instagram"| "Facebook" | "Google" | "todos")}>
-            <SelectTrigger className="w-[200px] rounded-md border border-gray-300 focus:outline-none focus:ring-0 "
-            >
+            <SelectTrigger className="w-[200px]">
                 <SelectValue></SelectValue>
             </SelectTrigger>
             <SelectContent>
@@ -32,8 +31,7 @@ interface TypesFilterProps {
 export function TypesFilter({value, onChange}: TypesFilterProps) {
     return(
         <Select value={value} onValueChange={(value) => onChange(value as "revenda" | "utilizacao" | "todos")}>
-            <SelectTrigger className="w-[200px] rounded-md border border-gray-300 focus:outline-none "
-            >
+            <SelectTrigger className="w-[200px]">
                 <SelectValue ></SelectValue>
             </SelectTrigger>
             <SelectContent>

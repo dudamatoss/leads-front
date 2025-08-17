@@ -72,8 +72,7 @@ export function PaginationControls({
         <div
             className={cn(
                 "w-full flex justify-center py-5",
-                "mt-4 rounded-xl border bg-white/80 backdrop-blur-sm",
-                className
+                "mt-4 rounded-xl border bg-card/80 backdrop-blur-sm",
             )}
         >
             <Pagination>

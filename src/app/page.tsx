@@ -17,6 +17,7 @@ import {LeadsLoading} from "@/components/LeadsRow/LeadsLoading";
 import {useLeadsPolling} from "@/hooks/useLeads";
 import {AnimationCards} from "@/components/Cards/AnimationCards";
 import {Skeleton} from "@/components/ui/skeleton";
+import {DarkMode} from "@/components/Theme/DarkMode";
 
 const ITEMS_FOR_PAGE = 8;
 
@@ -88,9 +89,12 @@ export default function Home() {
 
     return (
         <main className="p-4 md:p-10">
+            <div className="flex justify-end mb-4">
+                <DarkMode/>
+            </div>
             <div className="flex flex-col">
                 <h1 className="mb-2 text-4xl font-bold">Leads</h1>
-                <h3 className="text-gray-500 text-lg mb-3">Gerencie e vizualize todas as leads</h3>
+                <h3 className="text-muted-foreground text-lg mb-3">Gerencie e vizualize todas as leads</h3>
             </div>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <LeadCard
@@ -114,7 +118,7 @@ export default function Home() {
                     loading={isTotaisLoading}
                 />
 
-                <div className="w-full mt-10 mx-auto rounded-xl border shadow-sm bg-white sm:col-span-2 lg:col-span-3">
+                <div className="w-full mt-10 mx-auto rounded-xl border shadow-sm bg-card sm:col-span-2 lg:col-span-3">
                     {/* Filtro de status */}
                     <div className="p-6">
                         <StatusFilter value={statusFilter} onChange={setStatusFilter}/>
@@ -132,7 +136,7 @@ export default function Home() {
                                 <Skeleton className="h-8 w-40" />
                             ) : (<>{totais?.totalGeral ?? leads.length} Leads</>)}
                         </h2>
-                        <h3 className="text-gray-500 text-l">Todas as leads registradas</h3>
+                        <h3 className="text-muted-foreground text-l">Todas as leads registradas</h3>
                     </div>
                     {/* Cabeçalho da tabela */}
                     <div className="p-6">

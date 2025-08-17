@@ -21,10 +21,10 @@ export function TypeDropdown({ value, onChange }: InteresseButtonProps) {
         <Select value={value} onValueChange={(val) => onChange(val as "revenda" | "utilizacao")}>
             <SelectTrigger
                 className={cn(
-                    "text-xs w-fit px-3 h-8 rounded-md font-medium border border-neutral-200 bg-white",
+                    "text-xs w-fit px-3 h-8 rounded-md font-medium",
                     normalized === "revenda"
-                        ? "text-orange-500 hover:bg-orange-100"
-                        : "text-purple-500 hover:bg-purple-100"
+                        ? "text-orange-500 hover:bg-orange-100 dark:hover:bg-orange-900/30"
+                        : "text-purple-500 hover:bg-purple-100 dark:hover:bg-purple-900/30"
                 )}
             >
                 <SelectValue />

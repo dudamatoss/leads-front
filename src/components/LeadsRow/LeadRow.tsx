@@ -31,7 +31,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
 
     return (
         <div
-            className={`grid ${gridTemplate} items-center gap-4 px-6 py-3 border rounded-md bg-white text-sm animate-in fade-in slide-in-from-bottom-1 duration-300`}>
+            className={`grid ${gridTemplate} items-center gap-4 px-6 py-3 border rounded-md bg-card text-sm animate-in fade-in slide-in-from-bottom-1 duration-300`}>
             {/* Contato */}
             <div className="flex items-center gap-3 min-w-0">
                 <ContactAvatar name={lead.nome} interesse={localInteresse} />
@@ -49,10 +49,9 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
             </div>
 
             {/* Origem */}
-            <span className="text-gray-600 font-medium p-5">{lead.fonte?.trim() ? (lead.fonte) : (<span className="text-gray-400 font-normal italic">Não informado</span>)}</span>
-
+            <span className="text-muted-foreground font-medium p-5">{lead.fonte?.trim() ? (lead.fonte) : (<span className="text-muted-foreground font-normal italic">Não informado</span>)}</span>
             {/* Anúncio */}
-            <span className="text-orange-400 font-normal">{lead.anuncio?.trim() ? (lead.anuncio) : (<span className="text-gray-400 font-normal italic">Não informado</span>)}</span>
+            <span className="text-orange-400 font-normal">{lead.anuncio?.trim() ? (lead.anuncio) : (<span className="text-muted-foreground font-normal italic">Não informado</span>)}</span>
 
             {/* Tipo (interesse) */}
             <div>
@@ -83,7 +82,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
             </div>
 
             {/* Data */}
-            <span className="text-gray-600 font-medium whitespace-nowrap">
+            <span className="text-muted-foreground font-medium whitespace-nowrap">
                  {`${date.toLocaleDateString("pt-BR")} ${date.toLocaleTimeString("pt-BR", {
                     hour: "2-digit",
                     minute: "2-digit",
@@ -97,7 +96,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
                         value=""
                         placeholder="Não se aplica"
                         readOnly
-                        className="h-7 w-[140px] text-sm  bg-gray-50 text-gray-400 italic outline-dashed outline outline-offset-0"/>
+                        className="h-7 w-[140px] text-sm  bg-muted text-muted-foreground italic outline-dashed outline outline-offset-0"/>
                 ) : (
                     <ParceiroInput
                         initialValue={lead.parceiro ?? ""}

@@ -48,7 +48,7 @@ export function ParceiroInput({initialValue, onConfirm, placeholder = "Digite...
                 onChange={(e) => setValue(e.target.value)}
                 onBlur={handleBlur}
                 className={`h-7 w-[140px] text-sm py-1 px-2 focus-visible:border-orange-500 focus-visible:ring-orange-300 focus-visible:ring-1 ${inputClassName} ${
-                    !isPut ? "bg-gray-100 cursor-not-allowed" : ""
+                    !isPut ? "bg-muted cursor-not-allowed" : ""
                 }`}
             />
             {!isPut && (

@@ -29,8 +29,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-    <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <html lang="en" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <script
+          dangerouslySetInnerHTML={{
+              __html: `(() => {\n` +
+                  `  try {\n` +
+                  `    const t = localStorage.getItem('theme');\n` +
+                  `    if (t === 'dark') {\n` +
+                  `      document.documentElement.classList.add('dark');\n` +
+                  `    } else {\n` +
+                  `      document.documentElement.classList.remove('dark');\n` +
+                  `    }\n` +
+                  `  } catch (e) {}\n` +
+                  `})()`
+          }}
+      />
     <Undo>{children}</Undo>
       </body>
     </html>
