@@ -17,7 +17,8 @@ import {LeadsLoading} from "@/components/LeadsRow/LeadsLoading";
 import {useLeadsPolling} from "@/hooks/useLeads";
 import {AnimationCards} from "@/components/Cards/AnimationCards";
 import {Skeleton} from "@/components/ui/skeleton";
-import {DarkMode} from "@/components/Theme/DarkMode";
+import {ThemeToggle} from "@/components/Theme/ThemeToggle";
+
 
 const ITEMS_FOR_PAGE = 8;
 
@@ -57,9 +58,8 @@ export default function Home() {
             page: 1,
             limit: ITEMS_FOR_PAGE,
             status: statusParam,
-            interesse: interesseParam,
-            fonte: fonteParam,
-            busca: delayBusca,
+            interesse: interesseParam
+
         })
             .then(setTotais)
             .catch((err) => {
@@ -98,7 +98,7 @@ export default function Home() {
                 </div>
 
                 <div className="shrink-0">
-                    <DarkMode />
+                    <ThemeToggle/>
                 </div>
             </header>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

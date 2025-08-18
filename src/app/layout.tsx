@@ -36,7 +36,9 @@ export default function RootLayout({
               __html: `(() => {\n` +
                   `  try {\n` +
                   `    const t = localStorage.getItem('theme');\n` +
-                  `    if (t === 'dark') {\n` +
+                  `    const m = window.matchMedia('(prefers-color-scheme: dark)');\n` +
+                  `    const e = t === 'system' ? (m.matches ? 'dark' : 'light') : t;\n` +
+                  `    if (e === 'dark') {\n` +
                   `      document.documentElement.classList.add('dark');\n` +
                   `    } else {\n` +
                   `      document.documentElement.classList.remove('dark');\n` +
@@ -45,8 +47,8 @@ export default function RootLayout({
                   `})()`
           }}
       />
-    <Undo>{children}</Undo>
+      <Undo>{children}</Undo>
       </body>
-    </html>
+      </html>
   );
 }

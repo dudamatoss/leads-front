@@ -16,6 +16,7 @@ interface GetLeadsParamsTotiais {
     page: number;
     limit: number;
     status?: string;
+    interesse?: string;
 
 }
 

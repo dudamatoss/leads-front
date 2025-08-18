@@ -1,31 +1,50 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Moon, Sun, Monitor } from "lucide-react";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-export function DarkMode() {
-    const [isDark, setIsDark] = useState(false);
+type Theme = "light" | "dark" | "system";
+
+export function ThemeToggle() {
+    const [theme, setTheme] = useState<Theme>("system");
+    const itemClass =
+        "relative data-[state=on]:bg-transparent data-[state=on]:text-orange-600 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:content-[''] after:bg-transparent data-[state=on]:after:bg-orange-500";
 
     useEffect(() => {
-        const stored = localStorage.getItem("theme");
-        const isDarkMode = stored === "dark";
-        document.documentElement.classList.toggle("dark", isDarkMode);
-        setIsDark(isDarkMode);
+        const stored = (localStorage.getItem("theme") as Theme) || "system";
+        setTheme(stored);
     }, []);
 
-    const toggleTheme = () => {
-        const next = !isDark;
-        document.documentElement.classList.toggle("dark", next);
-        localStorage.setItem("theme", next ? "dark" : "light");
-        setIsDark(next);
+    useEffect(() => {
+        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        const apply = () => {
+            const resolved = theme === "system" ? (mediaQuery.matches ? "dark" : "light") : theme;
+            document.documentElement.classList.toggle("dark", resolved === "dark");
+        };
+        apply();
+        mediaQuery.addEventListener("change", apply);
+        return () => mediaQuery.removeEventListener("change", apply);
+    }, [theme]);
+
+    const handleChange = (value: string) => {
+        if (!value) return;
+        const next = value as Theme;
+        setTheme(next);
+        localStorage.setItem("theme", next);
     };
 
     return (
-        <Button variant="ghost" size="icon" onClick={toggleTheme} className="border-1">
-            <Moon className={`h-8 w-8 transition-all ${isDark ? "-rotate-90 scale-0" : "rotate-0 scale-100"}`} />
-            <Sun className={`absolute h-8 w-8 transition-all ${isDark ? "rotate-0 scale-100" : "rotate-90 scale-0"}`} />
-            <span className="sr-only">Toggle theme</span>
-        </Button>
+        <ToggleGroup type="single" value={theme} onValueChange={handleChange} variant="outline">
+            <ToggleGroupItem value="light" aria-label="Tema claro" className={itemClass}>
+                <Sun className="h-5 w-5" />
+            </ToggleGroupItem>
+            <ToggleGroupItem value="dark" aria-label="Tema escuro" className={itemClass}>
+                <Moon className="h-5 w-5" />
+            </ToggleGroupItem>
+            <ToggleGroupItem value="system" aria-label="Usar tema do sistema" className={itemClass}>
+                <Monitor className="h-5 w-5" />
+            </ToggleGroupItem>
+        </ToggleGroup>
     );
 }

@@ -11,6 +11,7 @@ import { ContactAvatar } from "@/components/LeadsRow/ItemsRow/Contact/ContactAva
 import { Input } from "@/components/ui/input";
 import {useUndo} from "@/components/Undo/Undo";
 import { formatCnpj} from "@/lib/services/formats/format-cnpj";
+import {formatDate} from "@/lib/services/formats/format-date";
 
 type Props = {
     lead: LeadType;
@@ -24,7 +25,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
     const { updateLead } = usePutLead();
     const  showUndo  = useUndo();
 
-    const formatDate = formatCnpj(lead.data_hora);
+    const formattedDate = formatDate(lead.data_hora);
     const gridTemplate = showParceiro
         ? "grid-cols-[1.5fr_1.1fr_1.3fr_1.2fr_1.2fr_1fr_1fr]"
         : "grid-cols-[1.5fr_1.5fr_1.3fr_1.2fr_1fr_1fr]";
@@ -83,7 +84,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
 
             {/* Data */}
             <span className="text-muted-foreground font-medium whitespace-nowrap">
-                {formatDate}
+                {formattedDate}
             </span>
 
             {/* Parceiro */}
