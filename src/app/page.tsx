@@ -133,17 +133,6 @@ export default function Home() {
                         <OriginFilter value={originFilter} onChange={setOriginFilter}/>
                         <TypesFilter value={typeFilter} onChange={setTypeFilter}/>
                     </div>
-                    {/* Título e subtítulo */}
-                    <div className="pl-6 pt-6 pb-6">
-                        <h2 className="pb-1 text-2xl font-bold">
-                            {loading ? (
-                                <Skeleton className="h-8 w-40" />
-                            ) : (
-                                <>{totais?.totalGeral ?? leads.length} Leads</>
-                            )}
-                        </h2>
-                        <h3 className="text-muted-foreground text-l">Todas as leads registradas</h3>
-                    </div>
                     {/* Cabeçalho da tabela */}
                     <div className="p-6">
                         <LeadsHeader showParceiro={typeFilter !== "revenda"}/>
