@@ -111,14 +111,14 @@ export default function Home() {
                 <LeadCard
                     title="Leads Revenda"
                     value={totais?.totalRevenda ?? 0}
-                    icon={UserCheck}
+                    icon={Handshake}
                     loading={isTotaisLoading}
                 />
 
                 <LeadCard
                     title="Leads Utilização"
                     value={totais?.totalUtilizacao ?? 0}
-                    icon={Handshake}
+                    icon={UserCheck}
                     loading={isTotaisLoading}
                 />
 

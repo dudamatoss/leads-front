@@ -19,27 +19,30 @@ export function useGetLeads(params: UseLeadsParams) {
 
     const { page, limit, status, interesse, fonte, busca } = params;
 
-    const fetchLeads = useCallback(async () => {
-        setError(false);
-        try {
-            const [leadsResponse, totals] = await Promise.all([
-                getLeads({ page, limit, status, interesse, fonte, busca }),
-                getLeadsTotais({ page: 1, limit, status, interesse, fonte, busca }),
-            ]);
-            setLeads(leadsResponse);
-            setTotalPages(Math.max(1, totals.totalPaginas));
-        } catch (err) {
-            console.error("Erro ao buscar leads:", err);
-            setError(true);
-            setLeads([]);
-            setTotalPages(1);
-        } finally {
-            setLoading(false);
-        }
-    }, [page, limit, status, interesse, fonte, busca]);
+    const fetchLeads = useCallback(
+        async (silent = false) => {
+            setError(false);
+            if (!silent) setLoading(true);
+            try {
+                const [leadsResponse, totals] = await Promise.all([
+                    getLeads({ page, limit, status, interesse, fonte, busca }),
+                    getLeadsTotais({ page: 1, limit, status, interesse }),
+                ]);
+                setLeads(leadsResponse);
+                setTotalPages(Math.max(1, totals.totalPaginas));
+            } catch (err) {
+                console.error("Erro ao buscar leads:", err);
+                setError(true);
+                setLeads([]);
+                setTotalPages(1);
+            } finally {
+                if (!silent) setLoading(false);
+            }
+        },
+        [page, limit, status, interesse, fonte, busca]
+    );
 
     useEffect(() => {
-        setLoading(true);
         fetchLeads();
     }, [fetchLeads]);
 

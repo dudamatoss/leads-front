@@ -6,7 +6,7 @@ export function useLeadsPolling(params: UseLeadsParams, interval = 10000) {
 
     useEffect(() => {
         if (error) return ;
-        const id = setInterval(refetch, interval);
+        const id = setInterval(() => refetch(true), interval);
         return () => clearInterval(id);
     }, [refetch, interval, error]);
 

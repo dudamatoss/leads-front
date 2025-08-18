@@ -65,7 +65,10 @@ export function Undo({children}: {children: ReactNode}) {
   "
                 >
                     <RotateCcw className="h-5 w-5" />
-                    Desfazer Alteração
+                    <span className="flex flex-col leading-tight ">
+                        <span>Desfazer Alterações <span className="self-end text-xs text-white/80 pl-4">Ctrl + Z</span></span>
+
+                    </span>
                 </button>
             )}
         </UndoContext.Provider>
