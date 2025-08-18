@@ -23,8 +23,8 @@ export function DarkMode() {
 
     return (
         <Button variant="ghost" size="icon" onClick={toggleTheme} className="border-1">
-            <Sun className={`h-8 w-8 transition-all ${isDark ? "-rotate-90 scale-0" : "rotate-0 scale-100"}`} />
-            <Moon className={`absolute h-8 w-8 transition-all ${isDark ? "rotate-0 scale-100" : "rotate-90 scale-0"}`} />
+            <Moon className={`h-8 w-8 transition-all ${isDark ? "-rotate-90 scale-0" : "rotate-0 scale-100"}`} />
+            <Sun className={`absolute h-8 w-8 transition-all ${isDark ? "rotate-0 scale-100" : "rotate-90 scale-0"}`} />
             <span className="sr-only">Toggle theme</span>
         </Button>
     );

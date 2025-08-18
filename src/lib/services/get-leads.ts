@@ -12,6 +12,12 @@ interface GetLeadsParams {
     busca?: string;
 
 }
+interface GetLeadsParamsTotiais {
+    page: number;
+    limit: number;
+    status?: string;
+
+}
 
 export async function getLeads({page,... params}: GetLeadsParams): Promise<LeadType[]> {
     const response = await apiLead.get<LeadType[]>("/leads/filtro", {
@@ -23,7 +29,7 @@ export async function getLeads({page,... params}: GetLeadsParams): Promise<LeadT
 
 
 
-export async function getLeadsTotais({page, ... params}: GetLeadsParams): Promise<LeadsTotais> {
+export async function getLeadsTotais({page, ... params}: GetLeadsParamsTotiais): Promise<LeadsTotais> {
     const response = await apiLead.get<LeadsTotais>("/leads/totais", {
         params: { ...params, page: Math.max(1, page) },
     });

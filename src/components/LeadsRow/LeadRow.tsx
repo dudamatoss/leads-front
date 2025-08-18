@@ -10,7 +10,7 @@ import { StatusButton } from "@/components/LeadsRow/ItemsRow/StatusCheck";
 import { ContactAvatar } from "@/components/LeadsRow/ItemsRow/Contact/ContactAvatar";
 import { Input } from "@/components/ui/input";
 import {useUndo} from "@/components/Undo/Undo";
-import { formatCnpj} from "@/lib/format-cnpj";
+import { formatCnpj} from "@/lib/services/formats/format-cnpj";
 
 type Props = {
     lead: LeadType;
@@ -24,7 +24,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
     const { updateLead } = usePutLead();
     const  showUndo  = useUndo();
 
-    const date = new Date(lead.data_hora);
+    const formatDate = formatCnpj(lead.data_hora);
     const gridTemplate = showParceiro
         ? "grid-cols-[1.5fr_1.1fr_1.3fr_1.2fr_1.2fr_1fr_1fr]"
         : "grid-cols-[1.5fr_1.5fr_1.3fr_1.2fr_1fr_1fr]";
@@ -83,10 +83,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
 
             {/* Data */}
             <span className="text-muted-foreground font-medium whitespace-nowrap">
-                 {`${date.toLocaleDateString("pt-BR")} ${date.toLocaleTimeString("pt-BR", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                })}`}
+                {formatDate}
             </span>
 
             {/* Parceiro */}
