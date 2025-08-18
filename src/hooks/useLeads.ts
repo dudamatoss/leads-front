@@ -1,7 +1,7 @@
 import {  useEffect } from "react";
 import {useGetLeads, UseLeadsParams} from "@/hooks/useGetLeads";
 
-export function useLeadsPolling(params: UseLeadsParams, interval = 5000) {
+export function useLeadsPolling(params: UseLeadsParams, interval = 10000) {
     const { leads, loading, error, refetch,totalPages } = useGetLeads(params);
 
     useEffect(() => {

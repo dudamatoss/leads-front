@@ -89,13 +89,18 @@ export default function Home() {
 
     return (
         <main className="p-4 md:p-10">
-            <div className="flex justify-end mb-4">
-                <DarkMode/>
-            </div>
-            <div className="flex flex-col">
-                <h1 className="mb-2 text-4xl font-bold">Leads</h1>
-                <h3 className="text-muted-foreground text-lg mb-3">Gerencie e vizualize todas as leads</h3>
-            </div>
+            <header className="flex items-center justify-between gap-4 mb-8">
+                <div className="min-w-0">
+                    <h1 className="text-4xl font-bold leading-tight">Leads</h1>
+                    <h3 className="text-muted-foreground text-lg">
+                        Gerencie e vizualize todas as leads
+                    </h3>
+                </div>
+
+                <div className="shrink-0">
+                    <DarkMode />
+                </div>
+            </header>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 <LeadCard
                     title={statusFilter === "ativos" ? "Leads Ativos" : "Leads Concluídos"}
@@ -125,7 +130,7 @@ export default function Home() {
                     </div>
                     {/* Filtros */}
                     <div className="flex flex-wrap gap-4 p-6">
-                        <SearchFilter placeholder="Buscar por nome..." value={busca} onChange={setBusca}/>
+                        <SearchFilter placeholder="Buscar por nome ou data..." value={busca} onChange={setBusca}/>
                         <OriginFilter value={originFilter} onChange={setOriginFilter}/>
                         <TypesFilter value={typeFilter} onChange={setTypeFilter}/>
                     </div>
