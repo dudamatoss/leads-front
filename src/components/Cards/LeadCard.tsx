@@ -18,7 +18,11 @@ export function LeadCard({ title, value, icon: Icon, loading }: LeadCardProps) {
                 <div>
                     <p className="text-lg text-muted-foreground font-medium">{title}</p>
                     <h2 className="text-4xl font-bold text-foreground mt-2">
-                        {loading ? <Skeleton className="h-8 w-16" /> : value}
+                        {loading ? (
+                            <Skeleton className="h-8 w-16" />
+                        ) : (
+                            <AnimationCards value={value} />
+                        )}
                     </h2>
                 </div>
 
