@@ -9,8 +9,7 @@ type Theme = "light" | "dark" | "system";
 export function ThemeToggle() {
     const [theme, setTheme] = useState<Theme>("system");
     const itemClass =
-        "relative data-[state=on]:bg-transparent data-[state=on]:text-orange-600 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:content-[''] after:bg-transparent data-[state=on]:after:bg-orange-500";
-
+        "relative data-[state=on]:bg-transparent data-[state=on]:text-[var(--color-primary-600)] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:content-[''] after:bg-transparent data-[state=on]:after:bg-[var(--color-primary-500)]";
     useEffect(() => {
         const stored = (localStorage.getItem("theme") as Theme) || "system";
         setTheme(stored);
@@ -30,8 +29,13 @@ export function ThemeToggle() {
     const handleChange = (value: string) => {
         if (!value) return;
         const next = value as Theme;
+        const root = document.documentElement;
+        root.classList.add("theme-transition");
         setTheme(next);
         localStorage.setItem("theme", next);
+        setTimeout(() => {
+            root.classList.remove("theme-transition");
+        }, 400);
     };
 
     return (

@@ -47,10 +47,8 @@ export function ParceiroInput({initialValue, onConfirm, placeholder = "Digite...
                 readOnly={!isPut}
                 onChange={(e) => setValue(e.target.value)}
                 onBlur={handleBlur}
-                className={`h-7 w-[140px] text-sm py-1 px-2 focus-visible:border-orange-500 focus-visible:ring-orange-300 focus-visible:ring-1 ${inputClassName} ${
-                    !isPut ? "bg-muted cursor-not-allowed" : ""
-                }`}
-            />
+                className={`h-7 w-[140px] text-sm py-1 px-2 focus-visible:border-[var(--color-primary-500)] focus-visible:ring-[var(--color-primary-300)] focus-visible:ring-1 ${inputClassName} ${
+                    !isPut ? "bg-muted cursor-not-allowed" : ""}`}/>
             {!isPut && (
                 <button
                     type="button"
@@ -58,7 +56,7 @@ export function ParceiroInput({initialValue, onConfirm, placeholder = "Digite...
                         setIsPut(true);
                         setTimeout(() => inputRef.current?.focus(), 0);
                     }}
-                    className="text-orange-500 hover:text-orange-700"
+                    className="text-[var(--color-primary-500)] hover:text-[var(--color-primary-700)]"
                 >
                     <Pencil size={18} />
                 </button>
@@ -69,7 +67,7 @@ export function ParceiroInput({initialValue, onConfirm, placeholder = "Digite...
                 <button
                     type="button"
                     onClick={handleConfirm}
-                    className="text-green-500 hover:text-green-700"
+                    className="text-[var(--color-success-500)] hover:text-[var(--color-success-700)]"
                 >
                     <SquareCheck size={20} />
                 </button>

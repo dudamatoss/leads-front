@@ -5,12 +5,12 @@ import {Button} from "@/components/ui/button";
 
 export function LeadsError() {
     return (
-        <div className="flex flex-col items-center justify-center py-10 text-center text-red-600">
-            <AlertTriangle className="h-12 w-12 mb-4 text-red-600" />
+        <div className="flex flex-col items-center justify-center py-10 text-center" style={{color: "var(--color-error-600)"}}>
+            <AlertTriangle className="h-12 w-12 mb-4" style={{color: "var(--color-error-600)"}} />
             <p className="text-lg font-medium">Ocorreu um erro ao carregar os leads</p>
             <div className="pt-4">
-            <Button className="text-red-600 bg-red-50 border-1 border-red-200 hover:text-red-700 hover:bg-red-100 "
-                    variant="ghost" onClick={() => window.location.reload()} ><RotateCcw /> Tentar novemente </Button>
+                <Button className=" border-1 border-[var(--color-error-500)] text-[var(--color-error-600)] hover:text-[var(--color-error-700)] hover:bg-[var(--color-error-50)] "
+                    variant="ghost" onClick={() => window.location.reload()}><RotateCcw /> Tentar novemente </Button>
             </div>
 
         </div>

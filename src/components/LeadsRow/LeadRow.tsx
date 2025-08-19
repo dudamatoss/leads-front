@@ -52,7 +52,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
             {/* Origem */}
             <span className="text-muted-foreground font-medium p-5">{lead.fonte?.trim() ? (lead.fonte) : (<span className="text-muted-foreground font-normal italic">Não informado</span>)}</span>
             {/* Anúncio */}
-            <span className="text-orange-400 font-normal">{lead.anuncio?.trim() ? (lead.anuncio) : (<span className="text-muted-foreground font-normal italic">Não informado</span>)}</span>
+            <span className="font-normal text-[var(--color-primary-400)]">{lead.anuncio?.trim() ? (lead.anuncio) : (<span className="text-muted-foreground font-normal italic">Não informado</span>)}</span>
 
             {/* Tipo (interesse) */}
             <div>

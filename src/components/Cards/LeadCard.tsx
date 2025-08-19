@@ -27,7 +27,7 @@ export function LeadCard({ title, value, icon: Icon, loading }: LeadCardProps) {
                 </div>
 
                 {/* Ícone à direita */}
-                <div className="p-2 rounded-md bg-orange-500/30 text-orange-500">
+                <div className="p-2 rounded-md" style={{backgroundColor: "var(--color-primary-30)", color: "var(--color-primary-500)",}}>
                     <Icon className="w-6 h-6" />
                 </div>
             </CardContent>

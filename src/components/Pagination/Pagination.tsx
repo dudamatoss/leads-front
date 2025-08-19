@@ -53,10 +53,10 @@ export function PaginationControls({
                 className={cn(
                     // número circular
                     "h-10 w-10 rounded-full grid place-items-center text-sm font-medium no-underline",
-                    "transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:ring-offset-2",
+                    "transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary-70)] focus-visible:ring-offset-2",
                     p === page
-                        ? "bg-orange-500 text-white shadow-sm hover:bg-orange-600"
-                        : "text-foreground/80 hover:text-foreground hover:bg-orange-50"
+                        ? "bg-[var(--color-primary-500)] text-white shadow-sm hover:bg-[var(--color-primary-600)]"
+                        : "text-foreground/80 hover:text-foreground hover:bg-[var(--color-primary-100)]"
                 )}
                 onClick={(e) => {
                     e.preventDefault();
@@ -85,11 +85,11 @@ export function PaginationControls({
                             className={cn(
                                 // retangular/fluid
                                 "h-10 w-auto px-4 rounded-lg text-sm font-medium flex items-center gap-2 no-underline",
-                                "transition-all hover:bg-orange-100/70 hover: active:scale-[.90] hover:text-orange-600",
-                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:ring-offset-2",
+                                "transition-all hover:bg-[var(--color-primary-light-70)] hover: active:scale-[.90] hover:text-[var(--color-primary-600)]",
+                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary-70)] focus-visible:ring-offset-2",
                                 page === 1
                                     ? "opacity-50 pointer-events-none"
-                                    : "text-orange-600"
+                                    : "text-[var(--color-primary-600)]"
                             )}
                             onClick={(e) => {
                                 e.preventDefault();
@@ -131,11 +131,11 @@ export function PaginationControls({
                             aria-disabled={page === totalPages}
                             className={cn(
                                 "h-10 w-auto px-4 rounded-lg text-sm font-medium flex items-center gap-2 no-underline",
-                                "transition-all hover:bg-orange-100/70 hover: active:scale-[.90] hover:text-orange-600",
-                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500/70 focus-visible:ring-offset-2",
+                                "transition-all hover:bg-[var(--color-primary-light-70)] hover: active:scale-[.90] hover:text-[var(--color-primary-600)]",
+                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary-70)] focus-visible:ring-offset-2",
                                 page === totalPages
                                     ? "opacity-50 pointer-events-none"
-                                    : "text-orange-600"
+                                    : "text-[var(--color-primary-600)]"
                             )}
                             onClick={(e) => {
                                 e.preventDefault();

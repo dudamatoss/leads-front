@@ -57,13 +57,12 @@ export function Undo({children}: {children: ReactNode}) {
     fixed bottom-6 right-6 z-50
     inline-flex items-center gap-2 rounded-lg
     px-5 py-3 text-sm font-medium
-    bg-orange-500 text-white
+    text-white
     shadow-lg hover:shadow-xl
-    hover:bg-orange-600
-    focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-orange-300
     active:scale-95 transition-all
-  "
-                >
+    focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[var(--color-primary-300)]
+    bg-[var(--color-primary-500)] hover:bg-[var(--color-primary-600)]
+  ">
                     <RotateCcw className="h-5 w-5" />
                     <span className="flex flex-col leading-tight ">
                         <span>Desfazer Alterações <span className="self-end text-xs text-white/80 pl-4">Ctrl + Z</span></span>

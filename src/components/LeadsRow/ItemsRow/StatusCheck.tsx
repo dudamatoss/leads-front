@@ -11,9 +11,10 @@ export function StatusButton({ status, onClick }: StatusButtonProps) {
 
     const icon = StatusAtivo ? <CheckCircle className="w-4 h-4" /> : <RotateCcw className="w-4 h-4" />;
     const label = StatusAtivo ? "Concluir" : "Tornar Ativo";
-    const textColor = StatusAtivo ? "text-green-600" : "text-orange-500";
-    const hoverColor = StatusAtivo ? "hover:bg-green-100 hover:text-green-600" : "hover:bg-orange-100 hover:text-orange-500";
-
+    const textColor = StatusAtivo ? "text-[var(--color-success-600)]" : "text-[var(--color-primary-500)]";
+    const hoverColor = StatusAtivo
+        ? "hover:bg-[var(--color-success-100)] hover:text-[var(--color-success-600)]"
+        : "hover:bg-[var(--color-primary-100)] hover:text-[var(--color-primary-500)]";
     return (
         <Button
             variant="ghost"

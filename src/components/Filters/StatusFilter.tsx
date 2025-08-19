@@ -18,7 +18,7 @@ export function StatusFilter({ value, onChange }: StatusFilterProps) {
         >
             <ToggleGroupItem
                 value="ativos"
-                className="px-4 py-2 rounded-lg text-foreground data-[state=on]:bg-orange-500/80 data-[state=on]:text-white data-[state=on]:shadow-sm"
+                className="px-4 py-2 rounded-lg text-foreground data-[state=on]:bg-[var(--color-primary-80)] data-[state=on]:text-white data-[state=on]:shadow-sm"
             >
                 <Clock3 className="mr-2 h-4 w-4" />
                 Ativos
@@ -26,7 +26,7 @@ export function StatusFilter({ value, onChange }: StatusFilterProps) {
 
             <ToggleGroupItem
                 value="concluidos"
-                className="px-4 py-2 rounded-lg text-foreground data-[state=on]:bg-orange-500/80 data-[state=on]:text-white data-[state=on]:shadow-sm"
+                className="px-4 py-2 rounded-lg text-foreground data-[state=on]:bg-[var(--color-primary-80)] data-[state=on]:text-white data-[state=on]:shadow-sm"
             >
                 <CircleCheckBig className="mr-2 h-4 w-4" />
                 Concluídos

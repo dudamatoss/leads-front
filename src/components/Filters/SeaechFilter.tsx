@@ -18,7 +18,7 @@ export function SearchFilter({ placeholder, value, onChange }: SearchInputProps)
                 placeholder={placeholder}
                 value={value}
                 onChange={(e) => onChange?.(e.target.value)}
-                className="pl-10 focus:outline-none focus-visible:border-orange-500 focus-visible:ring-orange-300 focus-visible:ring-2 "
+                className="pl-10 focus:outline-none focus-visible:border-[var(--color-primary-500)] focus-visible:ring-[var(--color-primary-300)] focus-visible:ring-2 "
             />
         </div>
     );

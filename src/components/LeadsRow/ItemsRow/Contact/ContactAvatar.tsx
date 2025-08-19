@@ -23,8 +23,8 @@ export function ContactAvatar({ name, interesse }: ContactAvatarProps) {
                 className={cn(
                     "text-white font-semibold text-xs",
                     interesse === "revenda"
-                        ? "bg-orange-500/80"
-                        : "bg-purple-500/80"
+                        ? "bg-[var(--color-primary-80)]"
+                        : "bg-[var(--color-purple-80)]"
                 )}
             >
                 {initials}

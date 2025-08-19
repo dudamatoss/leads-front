@@ -16,22 +16,22 @@ export function LeadsHeader({ showParceiro = true }: Props) {
             className={`grid ${gridTemplate} w-full items-center justify-items-start gap-4 rounded-md bg-muted px-14 py-3 text-sm font-medium text-muted-foreground`}
         >
             {/*Contato*/}
-            <div className="flex items-center gap-2 text-orange-500">
+            <div className="flex items-center gap-2 text-[var(--color-primary-500)]">
                 <User2 className="h-4 w-4" />
                 <span className="text-foreground ">Contato</span>
             </div>
             {/*Origem*/}
-            <div className="flex items-center gap-2 text-orange-500">
+            <div className="flex items-center gap-2 text-[var(--color-primary-500)]">
                 <Zap className="h-4 w-4" />
                 <span className="text-foreground ">Origem</span>
             </div>
             {/*Anuncio*/}
-            <div className="flex items-center gap-2 text-orange-500">
+            <div className="flex items-center gap-2 text-[var(--color-primary-500)]">
                 <Megaphone className="h-4 w-4" />
                 <span className="text-foreground ">Anuncio</span>
             </div>
             {/*Tipo*/}
-            <div className="flex items-center gap-2 text-orange-500">
+            <div className="flex items-center gap-2 text-[var(--color-primary-500)]">
                 <List className="h-4 w-4" />
                 <span className="text-foreground ">Tipo</span>
             </div>
@@ -42,13 +42,13 @@ export function LeadsHeader({ showParceiro = true }: Props) {
             </div>
             {/*Parceiro*/}
             {showParceiro && (
-                <div className="flex items-center gap-2 text-orange-500">
+                <div className="flex items-center gap-2 text-[var(--color-primary-500)]">
                     <Handshake className="h-4 w-4" />
                     <span className="text-foreground ">Parceiro</span>
                 </div>
             )}
             {/*Status*/}
-            <div className="flex items-center gap-2 text-orange-500 justify-self-end">
+            <div className="flex items-center gap-2 text-[var(--color-primary-500)] justify-self-end">
                 <MessageCircleQuestion className="h-4 w-4" />
                 <span className="text-foreground ">Status</span>
             </div>
