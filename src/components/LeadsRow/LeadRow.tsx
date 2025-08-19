@@ -28,7 +28,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
     const formattedDate = formatDate(lead.data_hora);
     const gridTemplate = showParceiro
         ? "grid-cols-[1.5fr_1.1fr_1.3fr_1.2fr_1.2fr_1fr_1fr]"
-        : "grid-cols-[1.5fr_1.5fr_1.3fr_1.2fr_1fr_1fr]";
+        : "grid-cols-[1.5fr_1.3fr_1.5fr_1.3fr_1fr_1fr]";
 
     return (
         <div
@@ -50,9 +50,12 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
             </div>
 
             {/* Origem */}
-            <span className="text-muted-foreground font-medium p-5">{lead.fonte?.trim() ? (lead.fonte) : (<span className="text-muted-foreground font-normal italic">Não informado</span>)}</span>
+            <div className="text-muted-foreground font-medium flex flex-col leading-tight">
+                {lead.fonte?.trim() ? (lead.fonte) : (<span className="text-muted-foreground font-normal italic">Não informado</span>)}
+                {lead.meio?.trim() ? (<span className="text-xs font-normal text-[var(--color-primary-400)]">({lead.meio})</span>) : (<span></span>)}
+            </div>
             {/* Anúncio */}
-            <span className="font-normal text-[var(--color-primary-400)]">{lead.anuncio?.trim() ? (lead.anuncio) : (<span className="text-muted-foreground font-normal italic">Não informado</span>)}</span>
+            <span className="font-normal text-muted-foreground">{lead.anuncio?.trim() ? (lead.anuncio) : (<span className="text-muted-foreground font-normal italic">Não informado</span>)}</span>
 
             {/* Tipo (interesse) */}
             <div>

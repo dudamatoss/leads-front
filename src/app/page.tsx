@@ -15,11 +15,11 @@ import {NoLeadsFound} from "@/components/LeadsRow/NoticeLeads/NoLeadsFound";
 import {LeadsError} from "@/components/LeadsRow/NoticeLeads/LeadsError";
 import {LeadsLoading} from "@/components/LeadsRow/LeadsLoading";
 import {useLeadsPolling} from "@/hooks/useLeads";
-import {Skeleton} from "@/components/ui/skeleton";
 import {ThemeToggle} from "@/components/Theme/ThemeToggle";
+import {LEADS_FOR_PAGE, POLLING_INTERVAL} from "@/lib/config";
 
 
-const ITEMS_FOR_PAGE = 8;
+
 
 export default function Home() {
     const [statusFilter, setStatusFilter] = useState<"ativos" | "concluidos">("ativos");
@@ -33,7 +33,7 @@ export default function Home() {
 
     const {leads, loading, error: leadsError, refetch, totalPages} = useLeadsPolling({
         page,
-        limit: ITEMS_FOR_PAGE,
+        limit: LEADS_FOR_PAGE,
         status: statusFilter === "ativos" ? "ativo" : "concluido",
         interesse: typeFilter !== "todos" ? typeFilter : undefined,
         fonte: originFilter !== "todos" ? originFilter : undefined,
@@ -55,7 +55,7 @@ export default function Home() {
 
         return getLeadsTotais({
             page: 1,
-            limit: ITEMS_FOR_PAGE,
+            limit: LEADS_FOR_PAGE,
             status: statusParam,
             interesse: interesseParam
 
@@ -71,7 +71,7 @@ export default function Home() {
     useEffect(() => {
         if (leadsError || totaisError) return;
         fetchTotais();
-        const id = setInterval(fetchTotais, 10000);
+        const id = setInterval(fetchTotais, POLLING_INTERVAL);
         return () => clearInterval(id);
     }, [fetchTotais, leadsError, totaisError]);
 
@@ -109,14 +109,14 @@ export default function Home() {
                 />
 
                 <LeadCard
-                    title="Leads Revenda"
+                    title={statusFilter === "ativos" ? "Leads de Revenda Ativos " : "Leads de Revenda Concluídos"}
                     value={totais?.totalRevenda ?? 0}
                     icon={Handshake}
                     loading={isTotaisLoading}
                 />
 
                 <LeadCard
-                    title="Leads Utilização"
+                    title={statusFilter === "ativos" ? "Leads de Utilização Ativos" : "Leads de Utilização Concluídos"}
                     value={totais?.totalUtilizacao ?? 0}
                     icon={UserCheck}
                     loading={isTotaisLoading}

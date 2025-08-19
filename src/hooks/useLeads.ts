@@ -1,7 +1,9 @@
 import {  useEffect } from "react";
 import {useGetLeads, UseLeadsParams} from "@/hooks/useGetLeads";
+import {POLLING_INTERVAL} from "@/lib/config";
 
-export function useLeadsPolling(params: UseLeadsParams, interval = 10000) {
+
+export function useLeadsPolling(params: UseLeadsParams, interval = POLLING_INTERVAL) {
     const { leads, loading, error, refetch,totalPages } = useGetLeads(params);
 
     useEffect(() => {
