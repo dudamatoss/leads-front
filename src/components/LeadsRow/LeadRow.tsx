@@ -39,16 +39,16 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
                 <ContactAvatar name={lead.nome} interesse={localInteresse} />
                 <div className="min-w-0">
                     {lead.nome?.trim() && (
-                        <CopyableText text={lead.nome} className="text-muted-foreground max-w-[180px]"/>
+                        <CopyableText text={lead.nome} className="text-muted-foreground font-bold max-w-[180px]"/>
                     )}
                     {lead.telefone?.trim() && (
                         <CopyableText text={formatPhone(lead.telefone)} className="text-muted-foreground max-w-[150px]"/>
                     )}
-                    {lead.email?.trim() && (
-                        <CopyableText text={lead.email} className="text-muted-foreground max-w-[200px]"/>
-                    )}
                     {lead.cnpj?.trim() && (
                         <CopyableText text={formatCnpj(lead.cnpj)} className="text-muted-foreground max-w-[150px]"/>
+                    )}
+                    {lead.email?.trim() && (
+                        <CopyableText text={lead.email} className="text-muted-foreground max-w-[200px]"/>
                     )}
                 </div>
             </div>

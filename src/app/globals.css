@@ -149,3 +149,20 @@
         @apply transition-colors duration-300;
     }
 }
+.scrollbar-muted {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gray-500) transparent;
+}
+
+.scrollbar-muted::-webkit-scrollbar {
+    width: 4px;
+}
+
+.scrollbar-muted::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scrollbar-muted::-webkit-scrollbar-thumb {
+    background-color: var(--color-gray-500);
+    border-radius: 4px;
+}

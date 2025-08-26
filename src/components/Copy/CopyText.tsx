@@ -6,10 +6,10 @@ import { useState } from "react";
 interface CopyableTextProps {
     text: string;
     className?: string;
-    title?: string;
+    title?: string; textClassName?: string;
 }
 
-export function CopyableText({ text, className, title }: CopyableTextProps) {
+export function CopyableText({ text, className, title, textClassName = "truncate" }: CopyableTextProps) {
     const [copied, setCopied] = useState(false);
 
     const handleCopy = () => {
@@ -40,7 +40,7 @@ export function CopyableText({ text, className, title }: CopyableTextProps) {
 
     return (
         <div className={`flex items-center gap-2 min-w-0 ${className}`}>
-            <span className="truncate flex-1" title={title ?? text}>{text}</span>
+            <span className={`flex-1 ${textClassName}`} title={title ?? text}>{text}</span>
             <span
                 className="relative w-4 h-4"
                 onClick={handleCopy}
