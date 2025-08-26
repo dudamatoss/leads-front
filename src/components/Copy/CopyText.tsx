@@ -13,15 +13,34 @@ export function CopyableText({ text, className, title }: CopyableTextProps) {
     const [copied, setCopied] = useState(false);
 
     const handleCopy = () => {
-        navigator.clipboard.writeText(text).then(() => {
-            setCopied(true);
-            setTimeout(() => setCopied(false), 1000);
-        });
+        if (navigator?.clipboard?.writeText) {
+            navigator.clipboard.writeText(text).then(() => {
+                setCopied(true);
+                setTimeout(() => setCopied(false), 1000);
+            });
+        } else {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.style.position = "fixed";
+            textarea.style.left = "-9999px";
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            try {
+                document.execCommand("copy");
+                setCopied(true);
+                setTimeout(() => setCopied(false), 1000);
+            } catch (err) {
+                console.error("Failed to copy text", err);
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
     };
 
     return (
         <div className={`flex items-center gap-2 min-w-0 ${className}`}>
-            <span className="truncate flex-1">{text}</span>
+            <span className="truncate flex-1" title={title ?? text}>{text}</span>
             <span
                 className="relative w-4 h-4"
                 onClick={handleCopy}

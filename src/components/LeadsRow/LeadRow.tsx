@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import {useUndo} from "@/components/Undo/Undo";
 import { formatCnpj} from "@/lib/services/formats/format-cnpj";
 import {formatDate} from "@/lib/services/formats/format-date";
+import {formatPhone} from "@/lib/services/formats/format-fone";
 
 type Props = {
     lead: LeadType;
@@ -39,6 +40,9 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
                 <div className="min-w-0">
                     {lead.nome?.trim() && (
                         <CopyableText text={lead.nome} className="text-muted-foreground max-w-[180px]"/>
+                    )}
+                    {lead.telefone?.trim() && (
+                        <CopyableText text={formatPhone(lead.telefone)} className="text-muted-foreground max-w-[150px]"/>
                     )}
                     {lead.email?.trim() && (
                         <CopyableText text={lead.email} className="text-muted-foreground max-w-[200px]"/>
