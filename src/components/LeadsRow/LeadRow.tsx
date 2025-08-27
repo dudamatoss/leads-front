@@ -13,6 +13,10 @@ import {useUndo} from "@/components/Undo/Undo";
 import { formatCnpj} from "@/lib/services/formats/format-cnpj";
 import {formatDate} from "@/lib/services/formats/format-date";
 import {formatPhone} from "@/lib/services/formats/format-fone";
+import { ContactCnpj } from "@/components/LeadsRow/ItemsRow/Contact/ContactCnpj";
+import {ContactName} from "@/components/LeadsRow/ItemsRow/Contact/ContactName";
+import {ContactEmail} from "@/components/LeadsRow/ItemsRow/Contact/ContactEmail";
+import {ContactPhone} from "@/components/LeadsRow/ItemsRow/Contact/ContactFone";
 
 type Props = {
     lead: LeadType;
@@ -37,19 +41,11 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
             {/* Contato */}
             <div className="flex items-center gap-3 min-w-0">
                 <ContactAvatar name={lead.nome} interesse={localInteresse} />
-                <div className="min-w-0">
-                    {lead.nome?.trim() && (
-                        <CopyableText text={lead.nome} className="text-muted-foreground font-bold max-w-[180px]"/>
-                    )}
-                    {lead.telefone?.trim() && (
-                        <CopyableText text={formatPhone(lead.telefone)} className="text-muted-foreground max-w-[150px]"/>
-                    )}
-                    {lead.cnpj?.trim() && (
-                        <CopyableText text={formatCnpj(lead.cnpj)} className="text-muted-foreground max-w-[150px]"/>
-                    )}
-                    {lead.email?.trim() && (
-                        <CopyableText text={lead.email} className="text-muted-foreground max-w-[200px]"/>
-                    )}
+                <div className="min-w-0 flex flex-col gap-0.5">
+                    <ContactName lead={lead} onUpdate={onUpdate} />
+                    <ContactPhone lead={lead} onUpdate={onUpdate} />
+                    <ContactCnpj lead={lead} onUpdate={onUpdate} />
+                    <ContactEmail lead={lead} onUpdate={onUpdate} />
                 </div>
             </div>
 

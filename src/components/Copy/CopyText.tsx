@@ -1,16 +1,20 @@
 "use client";
 
 import { Copy, BadgeCheck } from "lucide-react";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 interface CopyableTextProps {
     text: string;
     className?: string;
-    title?: string; textClassName?: string;
+    title?: string;
+    textClassName?: string;
+    children?: ReactNode;
 }
 
-export function CopyableText({ text, className, title, textClassName = "truncate" }: CopyableTextProps) {
+export function CopyableText({ text, className, title, textClassName = "truncate", children }: CopyableTextProps) {
     const [copied, setCopied] = useState(false);
+    const hasText = text.trim().length > 0;
+
 
     const handleCopy = () => {
         if (navigator?.clipboard?.writeText) {
@@ -39,25 +43,33 @@ export function CopyableText({ text, className, title, textClassName = "truncate
     };
 
     return (
-        <div className={`flex items-center gap-2 min-w-0 ${className}`}>
-            <span className={`flex-1 ${textClassName}`} title={title ?? text}>{text}</span>
+        <div className={`flex w-full items-center min-w-0 ${className}`}>
             <span
-                className="relative w-4 h-4"
-                onClick={handleCopy}
-                role="button"
-                title="Copiar"
+                className={`flex-1 min-w-0 ${textClassName}`}
+                title={title ?? text}
             >
-        {/* icone de copiar  */}
-                <Copy
-                    className={`absolute top-0 left-0 w-4 h-4 text-muted-foreground transition-all duration-300 ease-in-out 
-            ${copied ? "opacity-0 scale-75" : "opacity-100 scale-100 cursor-pointer"}`}
-                />
-                {/* icone de quando o texto foi copiado */}
-                <BadgeCheck
-                    className={`absolute top-0 left-0 w-4 h-4 text-[var(--color-success-600)] transition-all duration-300 ease-in-out
-            ${copied ? "opacity-100 scale-100" : "opacity-0 scale-75"}`}
-                />
-      </span>
+                {text}
+            </span>
+            <div className={`flex items-center ${hasText ? "gap-1 ml-1" : ""}`}>
+                {children}
+                {hasText && (
+                    <span
+                        className="relative w-4 h-4"
+                        onClick={handleCopy}
+                        role="button"
+                        title="Copiar"
+                    >
+                        {/* icone de copiar */}
+                        <Copy
+                            className={`absolute top-0 left-0 w-4 h-4 text-muted-foreground transition-all duration-300 ease-in-out ${copied ? "opacity-0 scale-75" : "opacity-100 scale-100 cursor-pointer"}`}
+                        />
+                        {/* icone de quando o texto foi copiado */}
+                        <BadgeCheck
+                            className={`absolute top-0 left-0 w-4 h-4 text-[var(--color-success-600)] transition-all duration-300 ease-in-out ${copied ? "opacity-100 scale-100" : "opacity-0 scale-75"}`}
+                        />
+                    </span>
+                )}
+            </div>
         </div>
     );
 }

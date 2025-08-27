@@ -87,7 +87,7 @@ export default function Home() {
     const isTotaisLoading = totais === null && !totaisError;
 
     return (
-        <main className="p-4 md:p-10">
+        <main className=" md:p-3">
             <header className="flex items-center justify-between gap-4 mb-8">
                 <div className="min-w-0">
                     <h1 className="text-4xl font-bold leading-tight">Leads</h1>

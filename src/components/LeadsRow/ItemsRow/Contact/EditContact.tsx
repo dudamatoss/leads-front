@@ -1,29 +1,31 @@
 "use client";
 
-import { useState, useRef, type KeyboardEvent, useEffect } from "react";
-import { Textarea } from "@/components/ui/inputarea";
-import { SquareCheck, Pencil } from "lucide-react";
-import { CopyableText } from "@/components/Copy/CopyText";
+import {useState, useRef, useEffect, type KeyboardEvent} from "react";
+import {Input} from "@/components/ui/input";
+import {CopyableText} from "@/components/Copy/CopyText";
+import {SquareCheck, Pencil} from "lucide-react";
 
-interface ParceiroInputProps {
+interface EditContactProps {
     initialValue: string;
     onConfirm: (value: string) => Promise<void>;
     placeholder?: string;
-    inputClassName?: string;
+    className?: string;
+    textClassName?: string;
+    formatter?: (value: string) => string;
 }
 
-const INPUT_HEIGHT = 28; // px
-
-export function ParceiroInput({
-                                  initialValue,
-                                  onConfirm,
-                                  placeholder = "Digite...",
-                                  inputClassName = "",
-                              }: ParceiroInputProps) {
+export function EditContact({
+                                         initialValue,
+                                         onConfirm,
+                                         placeholder = "Digite...",
+                                         className = "",
+                                         textClassName = "",
+                                         formatter,
+                                     }: EditContactProps) {
     const [value, setValue] = useState(initialValue);
     const [isEditing, setIsEditing] = useState(false);
     const [confirmedValue, setConfirmedValue] = useState(initialValue);
-    const inputRef = useRef<HTMLTextAreaElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         setValue(initialValue);
@@ -50,7 +52,7 @@ export function ParceiroInput({
         setIsEditing(false);
     };
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             e.preventDefault();
             if (hasChanged) {
@@ -61,26 +63,26 @@ export function ParceiroInput({
         }
     };
 
+    const displayValue = formatter ? formatter(confirmedValue) : confirmedValue;
+
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
             {isEditing ? (
-                <Textarea
+                <Input
                     ref={inputRef}
                     value={value}
                     placeholder={placeholder}
                     onChange={(e) => setValue(e.target.value)}
                     onBlur={handleBlur}
                     onKeyDown={handleKeyDown}
-                    rows={1}
-                    style={{ height: INPUT_HEIGHT }}
-                    className={`w-[140px] h-[28px] text-sm leading-tight py-1 px-2 bg-muted border border-transparent rounded items-start ${inputClassName}`}
+                    className={`h-7 text-sm ${className}`}
                 />
             ) : (
                 <CopyableText
-                    text={value}
-                    className={`w-[140px] h-[28px] text-sm leading-tight py-1 px-2 bg-muted border border-transparent rounded ${inputClassName}`}
-                    textClassName="truncate"
-                    title={value}
+                    text={displayValue}
+                    className={className}
+                    textClassName={textClassName}
+                    title={displayValue}
                 >
                     <button
                         type="button"
@@ -104,7 +106,7 @@ export function ParceiroInput({
                     >
                         <SquareCheck size={20} />
                     </button>
-            )}
+                )}
         </div>
     );
 }
