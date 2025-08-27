@@ -37,7 +37,7 @@ export function ContactName({ lead, onUpdate }: Props) {
                     console.error("Erro ao atualizar nome:", error);
                 }
             }}
-            className="text-muted-foreground font-bold max-w-[180px]"
+            className="text-muted-foreground font-bold w-[180px]"
         />
     );
 }

@@ -39,7 +39,7 @@ export function ContactPhone({ lead, onUpdate }: Props) {
             console.error("Erro ao atualizar telefone:", error);
         }
     }}
-    className="text-muted-foreground max-w-[150px]"
+    className="text-muted-foreground w-[150px]"
         />
 );
 }

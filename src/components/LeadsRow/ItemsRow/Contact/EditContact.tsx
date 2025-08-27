@@ -19,7 +19,7 @@ export function EditContact({
                                          onConfirm,
                                          placeholder = "Digite...",
                                          className = "",
-                                         textClassName = "",
+                                         textClassName = "truncate",
                                          formatter,
                                      }: EditContactProps) {
     const [value, setValue] = useState(initialValue);

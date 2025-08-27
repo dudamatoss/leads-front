@@ -37,7 +37,7 @@ export function ContactEmail({ lead, onUpdate }: Props) {
                     console.error("Erro ao atualizar email:", error);
                 }
             }}
-            className="text-muted-foreground max-w-[200px]"
+            className="text-muted-foreground w-[150px]"
         />
     );
 }

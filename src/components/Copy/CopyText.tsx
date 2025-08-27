@@ -50,7 +50,8 @@ export function CopyableText({ text, className, title, textClassName = "truncate
             >
                 {text}
             </span>
-            <div className={`flex items-center ${hasText ? "gap-1 ml-1" : ""}`}>
+            <div
+                className={`flex items-center flex-shrink-0 ${hasText ? "gap-1 ml-1" : ""}`}>
                 {children}
                 {hasText && (
                     <span
