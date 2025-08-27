@@ -12,6 +12,8 @@ export const LeadSchema = z.object({
     fonte: z.string(),
     meio: z.string(),
     anuncio: z.string(),
+    cidade: z.string().nullable().optional(),
+    cidade_id: z.string().nullable().optional(),
     data_hora: z.string(),
 });
 

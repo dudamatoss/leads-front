@@ -10,13 +10,12 @@ import { StatusButton } from "@/components/LeadsRow/ItemsRow/StatusCheck";
 import { ContactAvatar } from "@/components/LeadsRow/ItemsRow/Contact/ContactAvatar";
 import { Input } from "@/components/ui/input";
 import {useUndo} from "@/components/Undo/Undo";
-import { formatCnpj} from "@/lib/services/formats/format-cnpj";
 import {formatDate} from "@/lib/services/formats/format-date";
-import {formatPhone} from "@/lib/services/formats/format-fone";
 import { ContactCnpj } from "@/components/LeadsRow/ItemsRow/Contact/ContactCnpj";
 import {ContactName} from "@/components/LeadsRow/ItemsRow/Contact/ContactName";
 import {ContactEmail} from "@/components/LeadsRow/ItemsRow/Contact/ContactEmail";
 import {ContactPhone} from "@/components/LeadsRow/ItemsRow/Contact/ContactFone";
+import { CitySelect} from "@/components/LeadsRow/ItemsRow/CitySelect";
 
 type Props = {
     lead: LeadType;
@@ -32,8 +31,9 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
 
     const formattedDate = formatDate(lead.data_hora);
     const gridTemplate = showParceiro
-        ? "grid-cols-[1.5fr_1.1fr_1.3fr_1.2fr_1.2fr_1fr_1fr]"
-        : "grid-cols-[1.5fr_1.2fr_1.3fr_1.1fr_1fr_1fr]";
+        ? "grid-cols-[1.5fr_1fr_1.1fr_1.3fr_1.2fr_1.2fr_1fr_1fr]"
+        : "grid-cols-[1.5fr_1fr_1.3fr_1.5fr_1.3fr_1fr_1fr]";
+
 
     return (
         <div
@@ -48,6 +48,8 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
                     <ContactEmail lead={lead} onUpdate={onUpdate} />
                 </div>
             </div>
+            {/* Cidade */}
+            <CitySelect lead={lead} onUpdate={onUpdate} />
 
             {/* Origem */}
             <div className="text-muted-foreground font-medium flex flex-col leading-tight">
