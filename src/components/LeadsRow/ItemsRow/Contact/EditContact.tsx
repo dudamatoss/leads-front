@@ -90,7 +90,7 @@ export function EditContact({
                             setIsEditing(true);
                             setTimeout(() => inputRef.current?.focus(), 0);
                         }}
-                        className="text-[var(--color-primary-500)] hover:text-[var(--color-primary-700)]"
+                        className="text-[var(--secundary)] hover:text-[var(--color-primary-700)]"
                     >
                         <Pencil size={18} />
                     </button>

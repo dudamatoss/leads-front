@@ -33,11 +33,11 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
     const formattedDate = formatDate(lead.data_hora);
     const gridTemplate = showParceiro
         ? "grid-cols-[1.5fr_1.1fr_1.3fr_1.2fr_1.2fr_1fr_1fr]"
-        : "grid-cols-[1.5fr_1.3fr_1.5fr_1.3fr_1fr_1fr]";
+        : "grid-cols-[1.5fr_1.2fr_1.3fr_1.1fr_1fr_1fr]";
 
     return (
         <div
-            className={`grid ${gridTemplate} items-center gap-4 px-6 py-3 border rounded-md bg-card text-sm animate-in fade-in slide-in-from-bottom-1 duration-300`}>
+            className={`grid ${gridTemplate} items-center gap-x-9  gap-y-4 px-6 py-3 border rounded-md bg-card text-sm animate-in fade-in slide-in-from-bottom-1 duration-300`}>
             {/* Contato */}
             <div className="flex items-center gap-3 min-w-0">
                 <ContactAvatar name={lead.nome} interesse={localInteresse} />
