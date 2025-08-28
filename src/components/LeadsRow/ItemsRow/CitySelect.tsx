@@ -69,8 +69,11 @@ async function loadCities(): Promise<City[]> {
             })
             .catch((err) => {
                 console.error("Erro ao carregar cidades:", err);
-                cachedCities = [];
-                return cachedCities;
+                cachedCities = null;
+                return [];
+            })
+            .finally(() => {
+                fetchPromise = null;
             });
     }
     return fetchPromise;
@@ -134,21 +137,21 @@ export function CitySelect({ lead, onUpdate }: CitySelectProps) {
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger>
+            <PopoverTrigger asChild>
                 <Button
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
                     className="w-[170px] h-7 justify-between font-normal"
                 >
-          <span className="truncate max-w-[140px]">
-            {selected || "Selecione a cidade"}
-          </span>
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    <span className="truncate max-w-[140px]">
+                        {selected || "Selecione a cidade"}
+                    </span>
+                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[240px] p-0">
-                <Command>
+                <Command shouldFilter={false}>
                     <CommandInput
                         placeholder="Buscar cidade..."
                         value={search}

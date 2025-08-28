@@ -39,8 +39,8 @@ export function ContactCnpj({ lead, onUpdate }: Props) {
                     console.error("Erro ao atualizar CNPJ:", error);
                 }
             }}
-            className="text-muted-foreground"
-            textClassName="whitespace-nowrap"
+            className="text-muted-foreground w-[150px]"
+
         />
     );
 }
