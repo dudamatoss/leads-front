@@ -2,6 +2,7 @@
 
 import { Copy, BadgeCheck } from "lucide-react";
 import { useState, type ReactNode } from "react";
+import { Tooltip } from "@/components/ui/tooltip";
 
 interface CopyableTextProps {
     text: string;
@@ -44,12 +45,13 @@ export function CopyableText({ text, className, title, textClassName = "truncate
 
     return (
         <div className={`flex w-full items-center min-w-0 ${className}`}>
-            <span
-                className={`flex-1 min-w-0 ${textClassName}`}
-                title={title ?? text}
-            >
-                {text}
-            </span>
+            <Tooltip content={title ?? text} className="flex-1 min-w-0">
+                <span
+                    className={`flex-1 min-w-0 ${textClassName}`}
+                >
+                    {text}
+                </span>
+            </Tooltip>
             <div
                 className={`flex items-center flex-shrink-0 ${hasText ? "gap-1 ml-1" : ""}`}>
                 {children}

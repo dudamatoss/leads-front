@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/inputarea";
 import { SquareCheck, Pencil } from "lucide-react";
 import { CopyableText } from "@/components/Copy/CopyText";
 
+
 interface ParceiroInputProps {
     initialValue: string;
     onConfirm: (value: string) => Promise<void>;
@@ -62,7 +63,7 @@ export function ParceiroInput({
     };
 
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-[140px]">
             {isEditing ? (
                 <Textarea
                     ref={inputRef}
@@ -73,12 +74,12 @@ export function ParceiroInput({
                     onKeyDown={handleKeyDown}
                     rows={1}
                     style={{ height: INPUT_HEIGHT }}
-                    className={`w-[140px] h-[28px] text-sm leading-tight py-1 px-2 bg-muted border border-transparent rounded items-start ${inputClassName}`}
+                    className={`w-full h-[28px] text-sm leading-tight py-1 px-2 bg-muted border border-transparent rounded items-start ${inputClassName}`}
                 />
             ) : (
                 <CopyableText
                     text={value}
-                    className={`w-[140px] h-[28px] text-sm leading-tight py-1 px-2 bg-muted border border-transparent rounded ${inputClassName}`}
+                    className={`w-full h-[28px] text-sm leading-tight py-1 px-2 bg-muted border border-transparent rounded ${inputClassName}`}
                     textClassName="truncate"
                     title={value}
                 >
