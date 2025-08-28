@@ -17,6 +17,7 @@ export function OriginFilter({value, onChange}: OriginFilterProps) {
                 <SelectItem value="Instagram">Instagram</SelectItem>
                 <SelectItem value="Facebook">Facebook</SelectItem>
                 <SelectItem value="Google">Google</SelectItem>
+                <SelectItem value="outros">Outros</SelectItem>
             </SelectContent>
         </Select>
     )

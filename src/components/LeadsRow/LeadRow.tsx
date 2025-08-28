@@ -54,7 +54,7 @@ export function LeadRow({ lead, onUpdate, showParceiro = true }: Props) {
             {/* Origem */}
             <div className="text-muted-foreground font-medium flex flex-col leading-tight">
                 {lead.fonte?.trim() ? (lead.fonte) : (<span className="text-muted-foreground font-normal italic">Não informado</span>)}
-                {lead.meio?.trim() ? (<span className="text-sm font-normal text-[var(--color-primary-400)]">({lead.meio})</span>) : (<span></span>)}
+                {lead.meio?.trim() ? (<span className="text-sm font-normal">({lead.meio})</span>) : (<span></span>)}
             </div>
             {/* Anúncio */}
             <span className="font-normal text-muted-foreground">{lead.anuncio?.trim() ? (lead.anuncio) : (<span className="text-muted-foreground font-normal italic">Não informado</span>)}</span>
