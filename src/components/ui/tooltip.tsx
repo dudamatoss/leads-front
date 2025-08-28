@@ -1,3 +1,4 @@
+
 "use client";
 
 import { ReactNode } from "react";
@@ -22,7 +23,7 @@ export function Tooltip({ children, content, className, contentClassName }: Tool
                     )}
                 >
                     {content}
-                    <div className="absolute left-1/2 top-full -translate-x-1/2 h-2 w-2 rotate-45 bg-primary" />
+
                 </div>
             )}
         </div>

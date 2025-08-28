@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useRef, type KeyboardEvent, useEffect } from "react";
-import { Textarea } from "@/components/ui/inputarea";
 import { SquareCheck, Pencil } from "lucide-react";
 import { CopyableText } from "@/components/Copy/CopyText";
-
+import { Input } from "@/components/ui/input";
 
 interface ParceiroInputProps {
     initialValue: string;
@@ -13,7 +12,8 @@ interface ParceiroInputProps {
     inputClassName?: string;
 }
 
-const INPUT_HEIGHT = 28; // px
+const INPUT_HEIGHT = 28;
+const MAX_LENGTH = 50;
 
 export function ParceiroInput({
                                   initialValue,
@@ -51,7 +51,7 @@ export function ParceiroInput({
         setIsEditing(false);
     };
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             e.preventDefault();
             if (hasChanged) {
@@ -65,7 +65,7 @@ export function ParceiroInput({
     return (
         <div className="flex items-center gap-2 w-[140px]">
             {isEditing ? (
-                <Textarea
+                <Input
                     ref={inputRef}
                     value={value}
                     placeholder={placeholder}
@@ -73,13 +73,14 @@ export function ParceiroInput({
                     onBlur={handleBlur}
                     onKeyDown={handleKeyDown}
                     rows={1}
+                    maxLength={MAX_LENGTH}
                     style={{ height: INPUT_HEIGHT }}
-                    className={`w-full h-[28px] text-sm leading-tight py-1 px-2 bg-muted border border-transparent rounded items-start ${inputClassName}`}
+                    className={`w-full h-[28px] truncate text-sm leading-tight py-1 px-2 bg-muted border border-transparent rounded-md ${inputClassName}`}
                 />
             ) : (
                 <CopyableText
                     text={value}
-                    className={`w-full h-[28px] text-sm leading-tight py-1 px-2 bg-muted border border-transparent rounded ${inputClassName}`}
+                    className={`w-full h-[28px] text-sm leading-tight py-1 px-2 bg-muted border border-transparent rounded-md ${inputClassName}`}
                     textClassName="truncate"
                     title={value}
                 >
@@ -89,7 +90,7 @@ export function ParceiroInput({
                             setIsEditing(true);
                             setTimeout(() => inputRef.current?.focus(), 0);
                         }}
-                        className="text-[var(--color-primary-500)] hover:text-[var(--color-primary-700)]"
+                        className="text-[var(--muted-foreground)] hover:text-[var(--color-primary-500)]"
                     >
                         <Pencil size={18} />
                     </button>

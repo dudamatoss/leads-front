@@ -46,9 +46,7 @@ export function CopyableText({ text, className, title, textClassName = "truncate
     return (
         <div className={`flex w-full items-center min-w-0 ${className}`}>
             <Tooltip content={title ?? text} className="flex-1 min-w-0">
-                <span
-                    className={`flex-1 min-w-0 ${textClassName}`}
-                >
+                <span className={`block w-full ${textClassName}`}>
                     {text}
                 </span>
             </Tooltip>

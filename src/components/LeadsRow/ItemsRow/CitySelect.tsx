@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import { LeadType } from "@/schemas/leads-schemas";
 import { usePutLead } from "@/hooks/usePutLeads";
 import { useUndo } from "@/components/Undo/Undo";
@@ -20,6 +20,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
+import { Tooltip } from "@/components/ui/tooltip";
 
 interface City {
     id: number;
@@ -87,6 +88,8 @@ export function CitySelect({ lead, onUpdate }: CitySelectProps) {
     const [search, setSearch] = useState("");
     const [cities, setCities] = useState<City[]>([]);
     const [loading, setLoading] = useState(false);
+    const textRef = useRef<HTMLSpanElement>(null);
+    const [showTooltip, setShowTooltip] = useState(false);
     const { updateLead } = usePutLead();
     const showUndo = useUndo();
 
@@ -111,6 +114,12 @@ export function CitySelect({ lead, onUpdate }: CitySelectProps) {
         }, 300);
         return () => clearTimeout(handler);
     }, [search]);
+    useEffect(() => {
+        const el = textRef.current;
+        if(el){
+            setShowTooltip(el.scrollWidth > el.clientWidth);
+        }
+    }, [selected]);
 
     const handleSelect = async (city: City) => {
         const previous = selected;
@@ -146,9 +155,13 @@ export function CitySelect({ lead, onUpdate }: CitySelectProps) {
                     aria-expanded={open}
                     className="w-[170px] h-7 justify-between font-normal"
                 >
-                    <span className="truncate max-w-[140px]">
-                        {selected || "Selecione a cidade"}
-                    </span>
+                    <Tooltip
+                        content={showTooltip ? selected : null}
+                        className="max-w-[115px]">
+                        <span ref={textRef} className="block truncate max-w-[140px]">
+                            {selected || "Selecione a cidade"}
+                        </span>
+                    </Tooltip>
                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
