@@ -18,7 +18,7 @@ export function Tooltip({ children, content, className, contentClassName }: Tool
             {content && (
                 <div
                     className={cn(
-                        "pointer-events-none absolute left-1/2 bottom-full z-50 mb-1 max-w-xs -translate-x-1/2 rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground break-words opacity-0 transition-opacity group-hover:opacity-100",
+                        "pointer-events-none absolute  bottom-full z-50 mb-1 max-w-xs -translate-x-1/2 rounded-md bg-primary px-2 py-1.5 text-xs text-primary-foreground break-words opacity-0 transition-opacity group-hover:opacity-100",
                         contentClassName
                     )}
                 >
